@@ -7,6 +7,7 @@ import ReactStars from "react-rating-stars-component";
 import { FaCartArrowDown } from "react-icons/fa";
 import Button from "../components/Button";
 import Reviews from "../components/Reviews";
+import { addToCart } from "../redux/cartSlice";
 
 function ProductDetails() {
   let { id } = useParams();
@@ -21,100 +22,95 @@ function ProductDetails() {
     edit: false,
     size: window.innerWidth < 600 ? 14 : 20,
     value: product?.rating,
-    activeColor: "salmon",
+    activeColor: "#3182CE", // Blue color for rating stars
     isHalf: true,
   };
-
+  function addCart(prod) {
+    console.log(prod);
+    dispatch(addToCart(prod))
+  }
   return (
     <>
       {singleProduct.isLoading == true ? (
         <Loader />
       ) : (
         <>
-          <p className="px-8 py-8">Product Details</p>
-          <div className="w-full h-fit flex px-8 py-8 bg-gray-300 ">
-            {/* left div */}
-            <div className="mx-auto w-[40%] px-1 py-1">
+          <p className="text-3xl md:text-4xl px-8 py-4">Product Details</p>
+          <div className="flex flex-col md:flex-row justify-center items-center md:items-start px-8 py-4 bg-blue-100 rounded-lg shadow-lg">
+            {/* Product image */}
+            <div className="md:w-[40%] px-4 my-auto">
               {product && (
                 <img
                   src={product?.images?.[0]?.url}
                   alt=""
-                  className="md:w-[100%] md:float-right shadow-sm object-contain h-full max-h-[500px] "
+                  className="w-full md:max-w-sm mx-auto rounded-lg shadow-sm object-contain md:float-right md:h-full drop-shadow-xl"
                 />
               )}
             </div>
-
-            {/* right div */}
-            <div className="md:w-[60%] px-6 items-left justify-around flex flex-col py-2 ">
-              {/* top */}
-              <div className="flex flex-col gap-1">
-                {/* category */}
-                <p className="uppercase text-xs text-gray-600">
+            {/* Product details */}
+            <div className="md:w-[60%] px-4">
+              {/* Product category and name */}
+              <div className="mb-4">
+                <p className="text-xs text-gray-900 uppercase my-1">
                   {product?.category}
                 </p>
-                {/* title */}
-                <p className="text-2xl font-semibold text-slate-800 capitalize">
+                <p className="text-3xl font-semibold text-slate-800 capitalize">
                   {product?.name}
                 </p>
-                {/* Ratings */}
-                <span className="flex gap-2">
-                  <div className="flex">
-                    {product?.rating && <ReactStars {...options} />}
-                    {product?.rating && `(${product.rating})`}
-                  </div>
-                  <p className="text-sm text-gray-500">
-                    ({product?.numOfReviews}) Reviews
-                  </p>
-                </span>
               </div>
-              {/* middle */}
-              <div className="flex justify-left items-center gap-1 ">
-                {/* price */}
-                <p className="uppercase text-3xl text-blue-600">
+              {/* Ratings and reviews */}
+              <div className="mb-4 flex items-center">
+                <ReactStars {...options} />
+                <p className="text-sm text-gray-500 ml-2">
+                  ({product?.numOfReviews}) Reviews
+                </p>
+              </div>
+              {/* Product price */}
+              <div className="mb-4 flex items-center">
+                <p className="text-3xl text-blue-600 font-semibold">
                   ₹{product.price}
                 </p>
-                {/* added price */}
-                <p className="text-lg line-through text-slate-600 ">
+                <p className="text-lg line-through text-slate-600 ml-2">
                   ₹{(product.price * 1.5).toFixed(2)}
                 </p>
               </div>
-              {/* stock */}
-              <p className="flex items-center">
-                <span className="uppercase text-gray-800"> </span>
-                <span className={`bg-green-500 text-white px-1 py-0.5`}>
-                  In Stock
-                </span>{" "}
+              {/* Stock status */}
+              <p className="mb-4 flex items-center">
+                <span
+                  className={`  text-white px-2 py-1 uppercase text-xs ${
+                    product.stock <= 1 ? "bg-red-500" : "bg-green-500"
+                  }`}
+                >
+                  {product.stock < 1 && "Out Of Stock"}
+                  {product.stock == 1 && "Last Unit"}
+                  {product.stock > 1 && "In Stock"}
+                </span>
               </p>
-              {/* desc */}
-              <p className="md:text-xl font-normal font-serif my-1">
-                {product.desc}
-              </p>
-              {/* bottom */}
-              <div className="flex gap-5">
-                {/* qty btn */}
-                <div className="flex gap-3 justify-center items-center">
-                  <Button
-                    text={"+"}
-                    classes={"bg-gray-500 md:px-3 md:py-1 md:text-xl"}
-                  />
-                  <p className="md:text-xl">1</p>
-                  <Button
-                    text={"-"}
-                    classes={"bg-gray-500 md:px-3 md:py-1 md:text-xl"}
-                  />
-                </div>
-                {/* cart btn  */}
+              {/* Product description */}
+              <p className="text-lg font-normal mb-4">{product.desc}</p>
+              {/* Quantity selector and add to cart button */}
+              <div className="flex items-center mb-4">
                 <Button
-                  text={`Add to Cart `}
+                  text={"+"}
+                  classes={"bg-gray-500 px-3 py-1 text-lg mr-2"}
+                />
+                <p className="text-lg">1</p>
+                <Button
+                  text={"-"}
+                  classes={"bg-gray-500 px-3 py-1 text-lg ml-2"}
+                />
+                <Button
+                  fn={() => addCart(product)}
+                  text={"Add to Cart"}
                   icon={<FaCartArrowDown />}
-                  classes={"md:px-2 md:py-1 md:text-lg gap-1"}
+                  classes={"bg-blue-700 text-white px-4 py-2 ml-4"}
                 />
               </div>
             </div>
           </div>
           {/* Reviews */}
-          <div className="w-full h-full mx-auto my-4 py-4">
-            <p className="text-center text-2xl font-semibold">User Reviews</p>
+          <div className="mx-auto my-8 px-8">
+            <p className="text-3xl font-semibold mb-4">User Reviews</p>
             <Reviews />
           </div>
         </>

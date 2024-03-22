@@ -1,93 +1,89 @@
 import React from "react";
 import Marquee from "react-fast-marquee";
-import Product from "./Product";
 import Card from "./Card";
+
 function TopDeals() {
   const products = [
     {
       _id: "1",
-      name: "Sample product 1",
+      name: "Laptops",
       images: [
-        { url: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" },
+        { url: "https://m.media-amazon.com/images/I/71JwQSPtkRL._SY450_.jpg" },
       ],
-      category: "Laptop",
+      category: "laptop",
       price: 5000,
     },
     {
       _id: "2",
-      name: "Sample product 2",
+      name: "Mobiles",
       images: [
-        { url: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" },
+        {
+          url: "https://m.media-amazon.com/images/I/31p5cVyRLmL._SY445_SX342_QL70_FMwebp_.jpg",
+        },
       ],
-      category: "category2",
+      category: "mobile",
       price: 6000,
     },
     {
       _id: "4",
-      name: "Sample product 2",
+      name: "Tablet",
       images: [
-        { url: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" },
+        {
+          url: "https://m.media-amazon.com/images/I/31V3lrjd9YL._SX300_SY300_QL70_FMwebp_.jpg",
+        },
       ],
-      category: "category2",
+      category: "tablet",
       price: 6000,
     },
     {
       _id: "3",
-      name: "Sample product 2",
+      name: "HeadPhones",
       images: [
-        { url: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" },
+        {
+          url: "https://m.media-amazon.com/images/I/31rqjDOoKRL._SX300_SY300_QL70_FMwebp_.jpg",
+        },
       ],
-      category: "category2",
+      category: "headphone",
       price: 6000,
     },
     {
-      _id: "3",
-      name: "Sample product 2",
+      _id: "4",
+      name: "Earbuds",
       images: [
-        { url: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" },
+        {
+          url: "https://m.media-amazon.com/images/I/31JICL9In-L._SX300_SY300_QL70_FMwebp_.jpg",
+        },
       ],
-      category: "category2",
+      category: "earbuds",
       price: 6000,
     },
     {
-      _id: "3",
-      name: "Sample product 2",
+      _id: "5",
+      name: "Earbuds",
       images: [
-        { url: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" },
+        {
+          url: "https://m.media-amazon.com/images/I/31JICL9In-L._SX300_SY300_QL70_FMwebp_.jpg",
+        },
       ],
-      category: "category2",
+      category: "earbuds",
       price: 6000,
     },
-    {
-      _id: "3",
-      name: "Sample product 2",
-      images: [
-        { url: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" },
-      ],
-      category: "category2",
-      price: 6000,
-    },
-    {
-      _id: "3",
-      name: "Sample product 2",
-      images: [
-        { url: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" },
-      ],
-      category: "category2",
-      price: 6000,
-    },
-    // Add more products as needed
   ];
-  return (
-    <div className="text-black  py-4">
-      <p className="py-5 font-semibold text-4xl text-center shadow-sm drop-shadow-md">
-        Top Deals
-      </p>
 
-      <Marquee className="" pauseOnClick={true} pauseOnHover={true}>
-        {products.map((e, i) => {
-          return <Card key={i} product={e} />;
-        })}
+  return (
+    <div className="text-black py-8 my-5">
+      <p className="py-8 font-semibold text-4xl text-center text-blue-600">
+        Top Deals on
+      </p>
+      <Marquee
+        className="py-2"
+        pauseOnClick={true}
+        pauseOnHover={true}
+        speed={200}
+      >
+        {products.map((product, index) => (
+          <Card key={index} product={product} />
+        ))}
       </Marquee>
     </div>
   );

@@ -46,7 +46,9 @@ export const registerUser = createAsyncThunk("user/register", async (userData, t
 
 export async function handleLogout(dispatch, nav) {
 
-    localStorage.clear();
+    localStorage.removeItem("token");
+    localStorage.removeItem("auth");
+    localStorage.removeItem("user");
     nav("/");
     toast.success("Logout Successfully");
     dispatch(logout())
@@ -54,7 +56,6 @@ export async function handleLogout(dispatch, nav) {
 export function checkAuthFrontEnd() {
     let token = localStorage.getItem("token")
     let val = JSON.parse(localStorage.getItem("auth"))
-    console.log(token)
     return val ? (token && val) : false
 }
 
@@ -85,7 +86,8 @@ const userSlice = createSlice({
         },
 
         logout: (state, action) => {
-            localStorage.clear()
+            localStorage.removeItem("token")
+            localStorage.removeItem("user")
             state.token = null
             state.isAuthenticated = false
         }
@@ -103,7 +105,6 @@ const userSlice = createSlice({
                 state.isAuthenticated = true;
                 state.isError = false
                 localStorage.setItem("auth", true);
-                console.log(state.user)
                 localStorage.setItem("token", state.user.token);
 
                 localStorage.setItem("user", JSON.stringify(state.user.newUser))

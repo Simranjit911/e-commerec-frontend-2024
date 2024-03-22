@@ -15,21 +15,19 @@ export const fetchProducts = createAsyncThunk(
 );
 export const fetchProductswithQuery = createAsyncThunk('products/query', async (query, thunkAPI) => {
   try {
+    console.log(query)
     const response = await axios.get(`/product/all?${query}`)
     return response.data
   } catch (error) {
     return thunkAPI.rejectWithValue({ error: error.message });
   }
-
-
-
 })
 
 export const fetchSingleProduct = createAsyncThunk(
   'product/single',
   async (id, thunkAPI) => {
     try {
-      console.log("call")
+
       let res = await axios.get(`/product/one/${id}`)
       return res.data.product
     } catch (error) {
@@ -37,6 +35,67 @@ export const fetchSingleProduct = createAsyncThunk(
     }
   }
 );
+export const deleteProduct = createAsyncThunk('product/delete', async (id) => {
+  try {
+    let res = await axios.delete(`/product/delete/${id}`)
+    if (res.data.msg === "Product deleted!") {
+      toast.success(res.data.msg)
+      return res.data.msg
+    }
+    else {
+      toast.error("Product not deleted!")
+    }
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+})
+export const addNewProduct = createAsyncThunk(
+  'product/add/new',
+  async (data, thunkAPI) => {
+    try {
+      const config = {
+        headers: { "Content-Type": "multipart/form-data" }
+      };
+      // Ensure data is sent in the correct format
+
+      console.log(data)
+      const response = await axios.post("/product/new", data, config);
+      console.log(response.data);
+
+      if (response.data.msg === "Product created!") {
+        toast.success("Product created!");
+      } else {
+        toast.error("Failed to create product");
+      }
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while creating the product");
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+export const updateProduct = createAsyncThunk('product/update', async ({ id, data }) => {
+  try {
+    const config = {
+      headers: { "Content-Type": "application/json" }
+    };
+    console.log(data);
+    let res = await axios.put(`/product/update/${id}`, data, config);
+    console.log(res.data);
+    if (res.data.msg == "Product Updated!") {
+      toast.success("Product Updated!")
+    }
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    toast.error("Failed to update product")
+    throw error;
+  }
+});
+
 
 const initialState = {
   products: [],
@@ -52,7 +111,11 @@ const initialState = {
 const productSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    clearSingleProduct: (state) => {
+      state.singleProduct.product = {}
+    }
+  },
   extraReducers: (builder) => {
     builder
       // All products
@@ -96,4 +159,5 @@ const productSlice = createSlice({
       })
   }
 });
+export const { clearSingleProduct } = productSlice.actions
 export default productSlice.reducer;

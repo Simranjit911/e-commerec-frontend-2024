@@ -14,7 +14,7 @@ function Services() {
     },
     {
       logo: <MdOutlinePayment />,
-      heading: "Safe Payemnt",
+      heading: "Safe Payment",
       text: "For delivery on all orders",
     },
     {
@@ -35,16 +35,16 @@ function Services() {
   ];
 
   return (
-    <div className="text-black mt-10 flex justify-around bg-slate-300 px-3 py-16 shadow-md  mx-6 rounded-md">
+    <div className="text-black mt-10  flex flex-wrap justify-around bg-sky-200 px-3 py-8 shadow-md rounded-md lg:mx-6">
       {servicesData.map((ele, i) => (
         <div
           key={i}
-          className="flex justify-center items-center gap-3 hover:scale-105 duration-200 ease-in-out cursor-pointer border-1"
+          className="flex flex-col items-center justify-center gap-3 p-4 hover:scale-105 duration-200 ease-in-out cursor-pointer border-2 rounded-md border-blue-600"
         >
-          <p className="text-[39px] text-slate-900">{ele.logo}</p>
-          <div className="flex flex-col gap-0">
-            <p className="font-semibold text-lg text-blue-600">{ele.heading}</p>
-            <p className="text-sm text-slate-500">{ele.text}</p>
+          <div className="text-blue-600 text-4xl">{ele.logo}</div>
+          <div className="text-center">
+            <p className="font-semibold text-lg">{ele.heading}</p>
+            <p className="text-sm text-gray-500">{ele.text}</p>
           </div>
         </div>
       ))}

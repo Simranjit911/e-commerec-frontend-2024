@@ -5,6 +5,8 @@ import { MdDashboard, MdUpdate } from "react-icons/md";
 import { useSelector } from "react-redux";
 import MyProfile from "../components/profile/MyProfile";
 import Orders from "../components/profile/Orders";
+import Logout from "../components/profile/Logout";
+import AllOrders from "../components/order/AllOrders";
 
 function Profile() {
   const { user } = useSelector((state) => state.user);
@@ -19,7 +21,7 @@ function Profile() {
     {
       name: "orders",
       icon: <GiNotebook />,
-      component: <Orders />,
+      component: <AllOrders />,
     },
     {
       name: "update",
@@ -32,8 +34,9 @@ function Profile() {
     {
       name: "logout",
       icon: <CgLogOut />,
+      component: <Logout />,
     },
-  ];  
+  ];
   return (
     <div className="flex h-[100%]">
       {/* Sidebar */}

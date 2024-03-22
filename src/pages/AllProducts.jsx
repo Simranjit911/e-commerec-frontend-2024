@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "../axiosConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductswithQuery } from "../redux/productSlice";
@@ -25,13 +25,13 @@ function AllProducts() {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
   };
+  const queryParams = new URLSearchParams(filters).toString();
 
   const handleApplyFilters = () => {
     dispatch(fetchProductswithQuery(queryParams));
   };
 
   useEffect(() => {
-    console.log("uf call");
     dispatch(fetchProductswithQuery(queryParams));
   }, [filters.page]);
 
@@ -42,8 +42,6 @@ function AllProducts() {
   const handleNextPage = () => {
     setFilters((prevFilters) => ({ ...prevFilters, page: filters.page + 1 }));
   };
-  console.log(filters.page);
-  const queryParams = new URLSearchParams(filters).toString();
 
   return (
     <>
@@ -123,7 +121,7 @@ function AllProducts() {
           {/* Apply filters button */}
           <button
             onClick={handleApplyFilters}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="bg-blue-600 text-white px-4 py-2 cursor-pointer hover:bg-blue-900 mr-2"
           >
             Apply Filters
           </button>
@@ -132,23 +130,23 @@ function AllProducts() {
         {/* Main */}
         {isLoading && <Loader span={"loading products"} />}
         {!isLoading && isError && (
-          <div className="w-[85%] p-4">
+          <div className="w-[85%] text-center mx-auto p-4">
             <h2 className="text-xl font-semibold mb-2">Error</h2>
             <p>Error while fetching data</p>
           </div>
         )}
         {!isLoading && !isError && products?.products?.length < 1 && (
-          <div className="w-[85%] p-4">
+          <div className="w-[85%] text-center mx-auto p-4">
             <h2 className="text-xl font-semibold mb-2">No Products Found</h2>
             <p>No products matching the specified filters.</p>
           </div>
         )}
         {!isLoading && !isError && products?.products?.length > 0 && (
-          <main className="w-[85%] p-4">
+          <main className="w-[85%] text-center mx-auto  p-4">
             {/* Display products here */}
-            <h2 className="text-xl font-semibold mb-2">Products</h2>
+            <h2 className="text-3xl font-semibold mb-2">All Products</h2>
             {/* Example: map through products and display them */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-5 justify-center items-center">
               {products?.products?.map((p, i) => {
                 return <Product product={p} key={i} />;
               })}
@@ -161,14 +159,14 @@ function AllProducts() {
         <button
           onClick={handlePreviousPage}
           disabled={filters.page === 1}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
+          className="bg-blue-600 text-white px-4 py-2 cursor-pointer hover:bg-blue-900 mr-2"
         >
           Previous
         </button>
         <button
           onClick={handleNextPage}
           disabled={products?.products?.length < 6}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="bg-blue-600 text-white px-4 py-2 cursor-pointer hover:bg-blue-900 mr-2"
         >
           Next
         </button>

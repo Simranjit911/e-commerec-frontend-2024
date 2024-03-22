@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import MyProfile from "../profile/MyProfile";
 import { GiNotebook } from "react-icons/gi";
 import Orders from "../profile/Orders";
-import { MdDashboard, MdUpdate } from "react-icons/md";
+import { MdDashboard } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import { FaProductHunt } from "react-icons/fa6";
 import Dashboard from "./components/Dashboard";
