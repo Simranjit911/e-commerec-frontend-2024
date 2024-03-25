@@ -7,6 +7,8 @@ import Footer from "./components/Footer";
 import Register from "./pages/Register";
 
 import Profile from "./pages/Profile";
+import SuccessPage from "./pages/SuccessPage";
+// import CancelPage from "./pages/CancelPage";
 import PrivateRoute from "./components/PrivateRoute";
 import AllProducts from "./pages/AllProducts";
 import AdminCheck from "./components/admin/AdminCheck";
@@ -27,10 +29,12 @@ export default function App() {
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/allproducts" element={<AllProducts />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/success" element={<SuccessPage />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          {/* <Route path="/cancel" element={<CancelPage />} /> */}
           <Route path="/order-details/:id" element={<OrderDetails />} />
         </Route>
         <Route element={<AdminCheck />}>

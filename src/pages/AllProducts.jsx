@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import axios from "../axiosConfig";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProductswithQuery } from "../redux/productSlice";
 import Product from "../components/Product";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchProductswithQuery } from "../redux/productSlice";
 import Loader from "../components/Loader";
 
 function AllProducts() {
@@ -18,35 +17,51 @@ function AllProducts() {
     resultsPerPage: 10,
     page: 1,
   });
-  let dispatch = useDispatch();
-  let { products, isLoading, isError } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+  const { products, isLoading, isError } = useSelector(
+    (state) => state.products
+  );
 
+  // Function to handle filter change
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
   };
+
+  // Convert filters object to query parameters string
   const queryParams = new URLSearchParams(filters).toString();
 
-  const handleApplyFilters = () => {
-    dispatch(fetchProductswithQuery(queryParams));
-  };
-
+  // Fetch products when filters or page change
   useEffect(() => {
     dispatch(fetchProductswithQuery(queryParams));
-  }, [filters.page]);
+  }, [dispatch, filters.page, queryParams]);
 
-  const handlePreviousPage = () => {
-    setFilters((prevFilters) => ({ ...prevFilters, page: filters.page - 1 }));
+  // Calculate total number of pages based on total products and results per page
+  const totalPages = Math.ceil(
+    products?.totalProducts / filters.resultsPerPage
+  );
+
+  // Function to handle page change
+  const handlePageChange = (pageNumber) => {
+    setFilters((prevFilters) => ({ ...prevFilters, page: pageNumber }));
   };
 
-  const handleNextPage = () => {
-    setFilters((prevFilters) => ({ ...prevFilters, page: filters.page + 1 }));
+  // Generate array of page numbers for pagination
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
+  // Function to apply filters
+  const handleApplyFilters = () => {
+    dispatch(fetchProductswithQuery(queryParams));
   };
 
   return (
     <>
       <div className="flex">
         {/* Filters */}
+        {/* Your filter component here */}
         <aside className="w-[15%] border-r border-black p-4 bg-slate-500">
           <h2 className="text-xl font-semibold mb-2">Filters</h2>
           {/* Category filter */}
@@ -126,9 +141,12 @@ function AllProducts() {
             Apply Filters
           </button>
         </aside>
-
         {/* Main */}
-        {isLoading && <Loader span={"loading products"} />}
+        {isLoading && (
+          <div className="my-6 mx-auto">
+            <Loader span={"Loading products All Products"} />
+          </div>
+        )}
         {!isLoading && isError && (
           <div className="w-[85%] text-center mx-auto p-4">
             <h2 className="text-xl font-semibold mb-2">Error</h2>
@@ -147,30 +165,31 @@ function AllProducts() {
             <h2 className="text-3xl font-semibold mb-2">All Products</h2>
             {/* Example: map through products and display them */}
             <div className="flex flex-wrap gap-5 justify-center items-center">
-              {products?.products?.map((p, i) => {
-                return <Product product={p} key={i} />;
-              })}
+              {products?.products?.map((p, i) => (
+                <Product product={p} key={i} />
+              ))}
             </div>
           </main>
         )}
       </div>
       {/* Pagination */}
-      <div className="mt-4 flex justify-center items-center mx-auto my-6">
-        <button
-          onClick={handlePreviousPage}
-          disabled={filters.page === 1}
-          className="bg-blue-600 text-white px-4 py-2 cursor-pointer hover:bg-blue-900 mr-2"
-        >
-          Previous
-        </button>
-        <button
-          onClick={handleNextPage}
-          disabled={products?.products?.length < 6}
-          className="bg-blue-600 text-white px-4 py-2 cursor-pointer hover:bg-blue-900 mr-2"
-        >
-          Next
-        </button>
-      </div>
+      {!isLoading && !isError && products?.products?.length > 0 && (
+        <div className="mt-4 flex justify-center items-center mx-auto my-6">
+          {pageNumbers.map((pageNumber) => (
+            <button
+              key={pageNumber}
+              onClick={() => handlePageChange(pageNumber)}
+              className={`bg-blue-600 text-white px-4 py-2 cursor-pointer hover:bg-blue-900 mr-2 ${
+                filters.page === pageNumber
+                  ? "font-bold bg-blue-900 shadow-xl"
+                  : ""
+              }`}
+            >
+              {pageNumber}
+            </button>
+          ))}
+        </div>
+      )}
     </>
   );
 }

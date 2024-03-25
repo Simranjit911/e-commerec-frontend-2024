@@ -6,17 +6,16 @@ import { Navigate, useNavigate } from "react-router-dom";
 // Async thunk action to create a new order
 export const createOrder = createAsyncThunk('order/new', async (data, nav, thunkAPI) => {
     try {
+        console.log(data.paymentMethod)
         const config = {
             headers: { 'Content-Type': 'application/json' }
         }
         const res = await axios.post("/order/new", data, config);
-        if (res.status == 200) {
-            localStorage.removeItem('cart')
-            toast.success("Order Placed")  
-            console.log(res.data);
-            return res.data         
+        if (res.status == 200 && data.paymentMethod != "Card") {
+            toast.success("Order Placed")
+            return res.data
         }
-        console.log(res.data);
+        
     } catch (error) {
         // Log any errors
         console.log(error);

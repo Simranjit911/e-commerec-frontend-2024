@@ -14,18 +14,19 @@ const cartSlice = createSlice({
             console.log(action.payload)
             const { _id: id, name } = action.payload;
             const existingProduct = state.cart.find(item => item._id === id);
-            
+
             if (action.payload?.stock < 1) {
                 toast.error("Products is out of stock now")
             }
             else if (existingProduct) {
-                if (existingProduct.qty >= existingProduct.stock ) {
+                if (existingProduct.qty >= existingProduct.stock) {
                     toast.error("Products is out of stock now")
                 } else {
                     existingProduct.qty++;
+                    toast.success(`${name} added to cart!`);
+
                 }
             } else {
-                console.log("erlse")
                 state.cart.push({ ...action.payload, qty: 1 });
                 toast.success(`${name} added to cart!`);
             }
@@ -73,7 +74,7 @@ const cartSlice = createSlice({
 });
 
 // Function to save cart data to localStorage
-const saveCartToLocalStorage = (cartData) => {
+export const saveCartToLocalStorage = (cartData) => {
     localStorage.setItem("cart", JSON.stringify(cartData));
 };
 

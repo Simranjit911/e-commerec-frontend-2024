@@ -112,7 +112,9 @@ function Orders() {
                     ? "COD"
                     : "Card"}
                 </td>
-                <td className="  mx-auto py-1">{orderItem.isPaid}</td>
+                <td className="  mx-auto py-1 capitalize">
+                  {orderItem.isPaid}
+                </td>
                 <td className="  mx-auto py-1">
                   &#8377;{orderItem.totalPrice}
                 </td>
