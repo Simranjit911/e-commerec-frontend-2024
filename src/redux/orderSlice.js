@@ -1,19 +1,26 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../axiosConfig";
+import toast from "react-hot-toast";
+import { Navigate, useNavigate } from "react-router-dom";
 
 // Async thunk action to create a new order
-export const createOrder = createAsyncThunk('order/new', async (data, thunkAPI) => {
+export const createOrder = createAsyncThunk('order/new', async (data, nav, thunkAPI) => {
     try {
         const config = {
             headers: { 'Content-Type': 'application/json' }
         }
-        // Make a POST request to create a new order
         const res = await axios.post("/order/new", data, config);
-        // Log the response data
+        if (res.status == 200) {
+            localStorage.removeItem('cart')
+            toast.success("Order Placed")  
+            console.log(res.data);
+            return res.data         
+        }
         console.log(res.data);
     } catch (error) {
         // Log any errors
         console.log(error);
+        toast.error("Order not Placed")
         return thunkAPI.rejectWithValue({ error: error.message });
     }
 });
@@ -53,6 +60,7 @@ export const getSingleOrder = createAsyncThunk('/order/one', async (id, thunkAPI
 export const getAllOrders = createAsyncThunk('admin/orders/all', async (_, thunkAPI) => {
     try {
         // Make a GET request to fetch all orders for admin
+        console.log("call")
         const res = await axios.get("/order/all");
         // Log the response data
         console.log(res.data);
@@ -64,13 +72,21 @@ export const getAllOrders = createAsyncThunk('admin/orders/all', async (_, thunk
 });
 
 // Async thunk action to update an order by admin
-export const updateOrder = createAsyncThunk('admin/order/update', async (data, thunkAPI) => {
+export const updateOrder = createAsyncThunk('admin/order/update', async ({ orderId, status }, thunkAPI) => {
     try {
-        // Make a PUT request to update an order by admin
-        const res = await axios.put('/order/update', data, config);
+        // Make a PUT request to update the order status by admin
+        const res = await axios.put(`/order/update?orderId=${orderId}`, { orderStatus: status });
+        if (res.status == 200) {
+            toast.success("Order status updated ")
+        } else {
+            toast.loading("Status not updated")
+        }
+
     } catch (error) {
         // Log any errors
-        console.log(error);
+        toast.error("Error while updating status")
+        console.log(error.msg);
+        throw error;
     }
 });
 

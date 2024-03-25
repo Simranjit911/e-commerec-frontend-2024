@@ -13,14 +13,24 @@ function Logout() {
   let nav = useNavigate();
   let dispatch = useDispatch();
   let { isAuthenticated, user } = useSelector((state) => state.user);
+
   useEffect(() => {
-    console.log("useffect call nav");
+    console.log("useEffect call nav");
     // nav("/");
     dispatch(checkAuth());
   }, [registerUser, loginUser, isAuthenticated]);
+
   return (
-    <div>
-      <Button text={"Logout"} fn={() => handleLogout(dispatch, nav)} />
+    <div className="flex items-center justify-center md:min-h-[500px] bg-gray-800">
+      <div className="bg-slate-200 p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold mb-4">Logout</h2>
+        <p className="text-gray-600 mb-4">
+          Are you sure you want to logout, {user.username}?
+        </p>
+        <div className="flex justify-center">
+          <Button text="Logout" fn={() => handleLogout(dispatch, nav)} />
+        </div>
+      </div>
     </div>
   );
 }

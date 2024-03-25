@@ -9,14 +9,15 @@ function OrderDetails() {
   const dispatch = useDispatch();
   const { singleOrder } = useSelector((state) => state.order);
   const { order: od, isLoading, isError } = singleOrder;
-  const { order } = od;
+  const order = od ? od.order : null; // Add null check here
 
   useEffect(() => {
     dispatch(getSingleOrder(id));
   }, [dispatch, id]);
 
   if (isLoading) return <Loader />;
-  if (isError) return <div className="p-4">Error fetching order details</div>;
+  if (isError)
+    return <div className="p-4 text-red-600">Error fetching order details</div>;
   if (!order) return null;
 
   const {
@@ -27,67 +28,101 @@ function OrderDetails() {
     orderedTime,
     paymentMethod,
     isPaid,
-    itemPrice,
-    shippingPrice,
     totalPrice,
   } = order;
+  // Define order stages
+  const orderStages = ["Not Processed", "Packed", "Shipped", "Delivered"];
+  const orderTrackingStages = [
+    "Not Processed",
+    "Packed",
+    "Shipped",
+    "Delivered",
+  ];
+  // Get the index of the current order status
+  const currentStageIndex = orderStages.findIndex(
+    (stage) => stage.toLowerCase() == orderStatus.toLowerCase()
+  );
+  console.log(currentStageIndex);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">
-        <span className="font-bold">Order Details</span> (Order #{id.substring(0, 7)})
+    <div className="md:px-[20%] px-[10%] bg-gray-100 mx-auto p-4 rounded-lg shadow-lg">
+      <h1 className="text-3xl font-bold mb-6  text-gray-800">
+        Order Details (Order ID: #{id.substring(0, 7)})
       </h1>
-
-      <div className="bg-white rounded-lg shadow-md md:flex py-2">
-        <div className="w-full md:w-1/2 px-4">
-          <h2 className="text-2xl font-semibold mb-3">
-            <span className="font-bold">Shipping Information</span>
-          </h2>
-          <p className="text-gray-700 capitalize">
-            <span className="font-medium text-slate-700 text-xl">
-              Shipping Address:
-            </span>{" "}
-            {shippingInfo.address}, {shippingInfo.city}, {shippingInfo.state},{" "}
-            {shippingInfo.pinCode} {shippingInfo.country}
-          </p>
-          <p className="text-gray-700">
-            <span className="font-medium text-slate-700 text-xl">
-              Customer Name:
-            </span>{" "}
-            {name}
-          </p>
+      {/* Order Overview */}
+      <div className="bg-blue-200 rounded-lg shadow-md p-4 capitalize mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <h2 className="text-xl font-semibold mb-2 text-gray-800">
+              Shipping Information
+            </h2>
+            <p className="text-gray-700">
+              <span className="font-semibold">Shipping Address:</span>{" "}
+              {shippingInfo.address}, {shippingInfo.city}, {shippingInfo.state},{" "}
+              {shippingInfo.pinCode} {shippingInfo.country}
+            </p>
+            <p className="text-gray-700">
+              <span className="font-semibold">Customer Name:</span> {name}
+            </p>
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold mb-2 text-gray-800">
+              Order Information
+            </h2>
+            <p className="text-gray-700">
+              <span className="font-semibold">Order Status:</span> {orderStatus}
+            </p>
+            <p className="text-gray-700">
+              <span className="font-semibold">Order Time:</span> {orderedTime}
+            </p>
+            <p className="text-gray-700">
+              <span className="font-semibold">Payment Method:</span>{" "}
+              {paymentMethod}
+            </p>
+            <p className="text-gray-700">
+              <span className="font-semibold">Payment Status:</span>{" "}
+              {isPaid=="yes" ? "Paid" : "Not Paid"}
+            </p>
+          </div>
         </div>
-        <div className="w-full md:w-1/2 px-4 mt-4 md:mt-0">
-          <h2 className="text-2xl font-semibold mb-2">
-            <span className="font-bold">Order Information</span>
-          </h2>
-          <p className="text-gray-700">
-            <span className="font-medium text-slate-700 text-xl">Order Status:</span>{" "}
-            {orderStatus}
-          </p>
-          <p className="text-gray-700">
-            <span className="font-medium text-slate-700 text-xl">Ordered Time:</span>{" "}
-            {orderedTime}
-          </p>
-          <p className="text-gray-700">
-            <span className="font-medium text-slate-700 text-xl">Payment Method</span>{" "}
-            : {paymentMethod}
-          </p>
-          <p className="text-gray-700">
-            <span className="font-medium text-slate-700 text-xl">Payment Status:</span>{" "}
-            {isPaid ? "Paid" : "Not Paid"}
-          </p>
+      </div>
+      {/* Order Tracking */}
+      <div className="mt-8 my-8">
+        <h2 className="text-2xl font-semibold mb-2 text-gray-800">
+          Order Tracking
+        </h2>
+        <div className="flex justify-between items-center">
+          {orderTrackingStages.map((stage, index) => (
+            <div key={index} className="flex flex-col items-center">
+              <div
+                className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                  currentStageIndex >= index ? "bg-blue-900" : "bg-blue-300"
+                }`}
+              >
+                <span className="text-xs font-semibold text-white">
+                  {index + 1}
+                </span>
+              </div>
+              <p className="mt-2 text-sm font-medium text-gray-800">{stage}</p>
+              {/* <div
+                className={`h-1 w-10   bg-gray-500 ${
+                  currentStageIndex >= index ? "bg-blue-800" : "bg-gray-500"
+                }`}
+              ></div> */}
+            </div>
+          ))}
         </div>
       </div>
 
-      <h2 className="text-xl font-medium mt-6">
-        <span className="font-bold">Ordered Items</span>
+      {/* order items */}
+      <h2 className="text-xl font-semibold mb-4 text-gray-800">
+        Ordered Items
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {orderedItems.map((item) => (
           <div
             key={item._id}
-            className="flex items-center p-4 border rounded-lg"
+            className="flex items-center p-4 border rounded-lg shadow-md"
           >
             <img
               src={item.image}
@@ -95,19 +130,19 @@ function OrderDetails() {
               className="w-20 h-20 object-cover rounded-lg"
             />
             <div className="ml-4">
-              <p className="font-bold text-gray-800">{item.name}</p>
+              <p className="font-semibold text-gray-800 capitalize">
+                {item.name}
+              </p>
               <p className="text-gray-700">Qty: {item.qty}</p>
-              <p className="text-gray-700">Price: &#8377;{item.price}</p>
+              <p className="text-gray-700">Price: ₹{item.price}</p>
             </div>
           </div>
         ))}
       </div>
-
-      <div className="flex justify-between border-t border-gray-200 pt-4 mt-4 px-4">
-        <p className="text-gray-700">Item Price: &#8377;{itemPrice}</p>
-        <p className="text-gray-700">Shipping Price: &#8377;{shippingPrice}</p>
-        <p className="text-gray-700 font-bold">
-          Total Price: &#8377;{totalPrice}
+      {/* price  */}
+      <div className="flex justify-between items-center border-t-2 border-gray-800 pt-4 mt-4">
+        <p className="text-gray-700 font-bold text-xl">
+          Total Price: ₹{totalPrice}
         </p>
       </div>
     </div>

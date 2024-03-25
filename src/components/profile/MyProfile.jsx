@@ -1,11 +1,10 @@
-
 import { useSelector } from "react-redux";
 
 function MyProfile() {
   const { user } = useSelector((state) => state.user);
 
   return (
-    <div className="w-full h-full mx-auto flex flex-col items-center justify-center bg-blue-100">
+    <div className="w-full h-full mx-auto flex flex-col items-center justify-center bg-gray-800 md:min-h-[500px]">
       <img
         src={user?.avatar?.url}
         alt="Profile Avatar"

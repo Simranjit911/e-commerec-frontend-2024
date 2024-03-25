@@ -1,4 +1,4 @@
-import  { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers } from "../../../redux/adminSlice";
 import Loader from "../../Loader";
@@ -11,10 +11,8 @@ function User() {
     dispatch(fetchAllUsers());
   }, []);
 
-  console.log(users);
-
   return (
-    <div className="w-full h-full mx-auto bg-slate-4 *:00">
+    <div className="w-full min-h-[600px] mx-auto bg-gray-800 text-white py-2">
       <p className="text-center text-xl font-semibold my-4">All Users</p>
       {isLoading && <Loader span={"Loading All Users"} />}
       {isError && !isLoading && <div>Something went wrong</div>}
