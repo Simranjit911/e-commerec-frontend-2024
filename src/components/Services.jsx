@@ -6,46 +6,41 @@ import { FaShippingFast } from "react-icons/fa";
 import { MdOutlineVerified } from "react-icons/md";
 
 function Services() {
-  let servicesData = [
+  const servicesData = [
     {
-      logo: <CiDeliveryTruck />,
-      heading: "Free delivery",
-      text: "For delivery on all orders",
+      logo: <CiDeliveryTruck className="text-blue-600 text-3xl" />,
+      heading: "Free Delivery",
+      text: "On all orders",
     },
     {
-      logo: <MdOutlinePayment />,
+      logo: <MdOutlinePayment className="text-blue-600 text-3xl" />,
       heading: "Safe Payment",
-      text: "For delivery on all orders",
+      text: "Secure and trusted transactions",
     },
     {
-      logo: <FaShippingFast />,
+      logo: <FaShippingFast className="text-blue-600 text-3xl" />,
       heading: "Fast Service",
-      text: "For delivery on all orders",
+      text: "Quick turnaround times",
     },
     {
-      logo: <FaIdCard />,
-      heading: "Shop with Confidence",
-      text: "If goods have problems",
-    },
-    {
-      logo: <MdVerified />,
+      logo: <MdVerified className="text-blue-600 text-3xl" />,
       heading: "Verified Products",
-      text: "100% verified Product",
+      text: "High-quality and genuine items",
     },
   ];
 
   return (
-    <div className="text-black mt-10  flex flex-wrap justify-around bg-sky-200 px-3 py-8 shadow-md rounded-md lg:mx-6">
-      {servicesData.map((ele, i) => (
+    <div className=" mt-7 services-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 p-4 rounded-md shadow-md bg-sky-200">
+      {servicesData.map((service, index) => (
         <div
-          key={i}
-          className="flex flex-col items-center justify-center gap-3 p-4 hover:scale-105 duration-200 ease-in-out cursor-pointer border-2 rounded-md border-blue-600"
+          key={index}
+          className="service-card flex flex-col items-center justify-center p-3 hover:scale-105 duration-150 rounded-md hover:bg-sky-300 cursor-pointer border border-sky-400"
         >
-          <div className="text-blue-600 text-4xl">{ele.logo}</div>
-          <div className="text-center">
-            <p className="font-semibold text-lg">{ele.heading}</p>
-            <p className="text-sm text-gray-500">{ele.text}</p>
-          </div>
+          {service.logo}
+          <h3 className="text-xl font-semibold text-gray-800 mt-2">
+            {service.heading}
+          </h3>
+          <p className="text-gray-600 text-sm mt-1">{service.text}</p>
         </div>
       ))}
     </div>

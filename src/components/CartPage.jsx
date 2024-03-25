@@ -31,7 +31,7 @@ function CartPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 min-h-[400px]">
       {cart?.length < 1 ? (
         <div className="text-center text-gray-600">
           <p className="text-lg mb-4">Your cart is empty.</p>
@@ -42,14 +42,18 @@ function CartPage() {
           </Link>
         </div>
       ) : (
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Your Shopping Cart</h2>
-          <div className="overflow-x-auto">
+        <div className="md:px-[15%] min-h-">
+          <h2 className="container text-xl font-semibold mb-4">
+            Your Shopping Cart
+          </h2>
+          <div className="overflow-x-auto container ">
             <table className="w-full table-auto shadow-md rounded-lg">
               <thead className="border border-blue-400">
                 <tr>
                   <th className="px-1 py-1"></th>
-                  <th className="px-4 py-2 text-left">Product Name</th>
+                  <th className="px-4 py-2 text-sm md:text-md text-left">
+                    Product Name
+                  </th>
                   <th className="px-4 py-2 text-center">Price</th>
                   <th className="px-4 py-2 text-center">Qty</th>
                   <th className="px-4 py-2 text-center">Total Price</th>
@@ -73,7 +77,7 @@ function CartPage() {
                         className="w-12 h-12 object-cover rounded-sm shadow-xl mr-4"
                       />
                       <div>
-                        <p className="text-lg font-semibold capitalize">
+                        <p className="md:text-lg text-sm font-semibold capitalize">
                           {item.name}
                         </p>
                         <p className="text-xs text-blue-500 capitalize">
@@ -81,7 +85,7 @@ function CartPage() {
                         </p>
                       </div>
                     </td>
-                    <td className="px-4 py-2 text-center">${item.price}</td>
+                    <td className="px-4 py-2 text-center">₹{item.price}</td>
                     <td className="px-4 py-2 text-center">
                       <div className="flex justify-center items-center">
                         <Button
@@ -98,7 +102,7 @@ function CartPage() {
                       </div>
                     </td>
                     <td className="px-4 py-2 text-center">
-                      ${item.price * item.qty}
+                      ₹{item.price * item.qty}
                     </td>
                   </tr>
                 ))}
@@ -107,11 +111,14 @@ function CartPage() {
           </div>
           <div className="mt-8 flex justify-end">
             <div>
-              <p>Cart Total: ${cartTotal}</p>
+              <p className="font-semibold text-slate-800">
+                Cart Total: ₹{cartTotal}
+              </p>
               <Link to="/checkout">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                  Proceed to Checkout
-                </button>
+                <Button
+                  classes="bg-blue-300 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  text={"Proceed to Checkout"}
+                ></Button>
               </Link>
             </div>
           </div>

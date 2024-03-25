@@ -2,9 +2,9 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import img1 from "../../public/images/samsungimg.jpg";
-import img2 from "../../public/images/laptop.jpg";
-import img3 from "../../public/images/iphonee.avif";
+import img1 from "/images/samsungimg.jpg";
+import img2 from "/images/laptop.jpg";
+import img3 from "/images/iphonee.avif";
 import { FaCartArrowDown } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -22,19 +22,19 @@ const ImageSlider = () => {
 
   return (
     <Slider {...settings}>
-      <div className="relative bg-opacity-25 max-h-[300px] md:max-h-[500px] bg-black">
+      <div className="relative bg-opacity-25 max-h-[500px] md:max-h-[500px] bg-black">
         <img
           src={img1}
           alt=""
-          className="md:max-h-[500px]  max-h-[300px] w-full object-cover"
+          className="md:max-h-[500px]  max-h-[500px] w-full object-cover"
         />
         <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center text-white">
           <div className="text-center">
-            <h2 className="text-2xl font-bold mb-2 text-black">
+            <h2 className="tmd:text-2xl text-xl text-slate-400 font-bold mb-2">
               20% off on Mobiles
             </h2>
             <button
-              className="group relative bg-white text-black font-medium text-md uppercase px-2 py-2 rounded-sm group-hover:opacity-100 inline-block z-10 transition-all duration-500 ease-in-out  hover:bg-blue-600 hover:text-white shadow-xl"
+              className="group relative bg-gray-800 text-white font-medium text-md  text-sm md:text-md uppercase px-1 py-1 md:px-2 md:py-2 rounded-sm group-hover:opacity-100 inline-block z-10 transition-all duration-500 ease-in-out  hover:bg-blue-600 hover:text-white shadow-xl"
               onClick={() => nav("/allproducts")}
             >
               <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-500 opacity-0 group-hover:opacity-100 z-10">
@@ -47,19 +47,20 @@ const ImageSlider = () => {
           </div>
         </div>
       </div>
-      <div className="relative  max-h-[238px]  md:max-h-[500px] bg-opacity-50 bg-black">
+      {/* div 2 */}
+      <div className="relative  max-h-[480px]  md:max-h-[500px] bg-opacity-50 bg-black">
         <img
           src={img2}
           alt=""
-          className=" max-h-[238px] md:max-h-[500px] w-full object-cover"
+          className=" max-h-[480px] md:max-h-[500px] w-full object-cover"
         />
         <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center text-white">
           <div className="text-center">
-            <h2 className="text-2xl font-bold mb-2">
+            <h2 className="md:text-2xl text-xl font-bold mb-2">
               Huge Discounts on Laptops
             </h2>
             <button
-              className="group relative bg-white text-black font-medium text-md uppercase px-2 py-2 rounded-sm group-hover:opacity-100 inline-block z-10 transition-all duration-500 ease-in-out  hover:bg-blue-600 hover:text-white shadow-xl"
+              className="group relative bg-[#232126] text-white font-medium text-md uppercase text-sm md:text-md  px-1 py-1 md:px-2 md:py-2rounded-sm group-hover:opacity-100 inline-block z-10 transition-all duration-500 ease-in-out  hover:bg-blue-600 hover:text-white shadow-xl"
               onClick={() => nav("/allproducts")}
             >
               <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-500 opacity-0 group-hover:opacity-100 z-10">
@@ -72,6 +73,7 @@ const ImageSlider = () => {
           </div>
         </div>
       </div>
+      {/* div 3 */}
       <div className="relative md:max-h-[500px]">
         <img
           src={img3}
@@ -80,9 +82,11 @@ const ImageSlider = () => {
         />
         <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center text-white">
           <div className="text-center">
-            <h2 className="text-2xl font-bold mb-2">Special Offer!</h2>
+            <h2 className="md:text-2xl text-xl font-bold mb-2">
+              Special Offer!
+            </h2>
             <button
-              className="group relative bg-white text-black font-medium text-md uppercase px-2 py-2 rounded-sm group-hover:opacity-100 inline-block z-10 transition-all duration-500 ease-in-out  hover:bg-blue-600 hover:text-white shadow-xl"
+              className="group relative bg-[#7a474a] text-black font-medium text-sm md:text-md uppercase px-1 py-1 md:px-2 md:py-2 rounded-sm group-hover:opacity-100 inline-block z-10 transition-all duration-500 ease-in-out  hover:bg-blue-600 hover:text-white shadow-xl"
               onClick={() => nav("/allproducts")}
             >
               <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-500 opacity-0 group-hover:opacity-100 z-10">

@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { createOrder } from "../redux/orderSlice";
 import toast from "react-hot-toast";
 import { loadStripe } from "@stripe/stripe-js";
-import Button from "../components/Button";
+
 import axios from "../axiosConfig";
 
 // import { createOrder } from "../redux/orderSlice"; // Assuming you have an order slice with an action to create an order

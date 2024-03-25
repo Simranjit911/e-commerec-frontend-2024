@@ -37,18 +37,20 @@ function LatestProducts() {
 
   return (
     <div>
-      {products ? (
-        <div className="text-black text-center bg-gray-200 my-3 py-4 ">
-          <p className="py-5 font-semibold text-3xl ">Latest Products</p>
-          <div className="flex flex-wrap gap-7 my-5 items-center justify-center ">
-            {products.products?.map((product, index) => (
+      <div className="text-black text-center bg-gray-200 my-3 py-4 ">
+        <p className="py-2 md:ml-28 font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-sky-600">
+          Latest Products
+        </p>
+        <div className="flex flex-wrap gap-7 my-5 items-center justify-center ">
+          {products.length <= 1 ? (
+            <Loader span={"Loading Latest Products"} />
+          ) : (
+            products.products?.map((product, index) => (
               <Product key={index} product={product} />
-            ))}
-          </div>
+            ))
+          )}
         </div>
-      ) : (
-        <Loader span={"Loading Latest Products..."} />
-      )}
+      </div>
     </div>
   );
 }

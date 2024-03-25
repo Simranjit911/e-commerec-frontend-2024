@@ -8,7 +8,7 @@ import Register from "./pages/Register";
 
 import Profile from "./pages/Profile";
 import SuccessPage from "./pages/SuccessPage";
-// import CancelPage from "./pages/CancelPage";
+import CancelPage from "./pages/CancelPage";
 import PrivateRoute from "./components/PrivateRoute";
 import AllProducts from "./pages/AllProducts";
 import AdminCheck from "./components/admin/AdminCheck";
@@ -30,6 +30,7 @@ export default function App() {
         <Route path="/allproducts" element={<AllProducts />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/success" element={<SuccessPage />} />
+        <Route path="/cancel" element={<CancelPage />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />

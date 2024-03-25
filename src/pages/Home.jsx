@@ -9,16 +9,15 @@ import { checkAuth } from "../redux/userSlice";
 import RecommendedProd from "../components/RecommendedProd";
 import { loadCartFromLocalStorage } from "../redux/cartSlice";
 // import { getCartData } from "../redux/cartSlice";
-
+import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 function Home() {
   const dispatch = useDispatch();
   const { products, isLoading, isError, singleProduct } = useSelector(
     (state) => state.products
   );
   let { user, isAuthenticated } = useSelector((state) => state.user);
-
-
-
+  let nav = useNavigate();
   return (
     <div className="w-full h-full text-white ">
       <ImageSlider />
@@ -26,6 +25,13 @@ function Home() {
       <TopDeals />
       <LatestProducts />
       <RecommendedProd />
+      <div className="mx auto flex justify-center items-center my-8">
+        <Button
+          text={"Explore More Products"}
+          fn={() => nav("/allproducts")}
+          classes={"mx auto flex justify-center items-center"}
+        />
+      </div>
     </div>
   );
 }

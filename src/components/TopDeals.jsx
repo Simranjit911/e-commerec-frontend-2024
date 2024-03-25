@@ -57,22 +57,11 @@ function TopDeals() {
       category: "earbuds",
       price: 6000,
     },
-    {
-      _id: "5",
-      name: "Earbuds",
-      images: [
-        {
-          url: "https://m.media-amazon.com/images/I/31JICL9In-L._SX300_SY300_QL70_FMwebp_.jpg",
-        },
-      ],
-      category: "earbuds",
-      price: 6000,
-    },
   ];
 
   return (
     <div className="text-black py-8 my-5">
-      <p className="py-8 font-semibold text-4xl text-center text-blue-600">
+      <p className="py-2 md:ml-28 font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-sky-600">
         Top Deals on
       </p>
       <Marquee

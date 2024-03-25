@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { fetchSingleProduct } from "../redux/productSlice";
 import Loader from "../components/Loader";
 import ReactStars from "react-rating-stars-component";
@@ -8,7 +8,8 @@ import { FaCartArrowDown } from "react-icons/fa";
 import Button from "../components/Button";
 import Reviews from "../components/Reviews";
 import { addToCart } from "../redux/cartSlice";
-
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { MdNavigateNext } from "react-icons/md";
 function ProductDetails() {
   let { id } = useParams();
   let dispatch = useDispatch();
@@ -27,7 +28,7 @@ function ProductDetails() {
   };
   function addCart(prod) {
     console.log(prod);
-    dispatch(addToCart(prod))
+    dispatch(addToCart(prod));
   }
   return (
     <>
@@ -35,7 +36,16 @@ function ProductDetails() {
         <Loader />
       ) : (
         <>
-          <p className="text-3xl md:text-4xl px-8 py-4">Product Details</p>
+          <p className=" flex text-black items-center capitalize  px-8 py-4">
+            <Link to={"/"} className="font-bold text-black text-4xl ">
+              <IoIosArrowRoundBack />
+            </Link>
+            <span className="ml-3 text-gray-600 text-md flex items-center gap-1 text-sm md:text-md">
+              {product?.category}
+              <MdNavigateNext />
+              {product?.name}
+            </span>
+          </p>
           <div className="flex flex-col md:flex-row justify-center items-center md:items-start px-8 py-4 bg-blue-100 rounded-lg shadow-lg">
             {/* Product image */}
             <div className="md:w-[40%] px-4 my-auto">
@@ -90,7 +100,7 @@ function ProductDetails() {
               <p className="text-lg font-normal mb-4">{product.desc}</p>
               {/* Quantity selector and add to cart button */}
               <div className="flex items-center mb-4">
-                <Button
+                {/* <Button
                   text={"+"}
                   classes={"bg-gray-500 px-3 py-1 text-lg mr-2"}
                 />
@@ -98,7 +108,7 @@ function ProductDetails() {
                 <Button
                   text={"-"}
                   classes={"bg-gray-500 px-3 py-1 text-lg ml-2"}
-                />
+                /> */}
                 <Button
                   fn={() => addCart(product)}
                   text={"Add to Cart"}

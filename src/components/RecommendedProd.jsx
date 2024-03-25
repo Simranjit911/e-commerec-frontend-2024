@@ -1,14 +1,15 @@
 import Product from "./Product";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "../axiosConfig.js";
 import { useEffect, useState } from "react";
 import { fetchProductswithQuery } from "../redux/productSlice";
+import Loader from "./Loader.jsx";
+
 function RecommendedProd() {
   const { products, isLoading, isError, singleProduct } = useSelector(
     (state) => state.products
   );
-  let recom = products;
-  let dispatch = useDispatch();
+  const [recom, setRecom] = useState([]);
+  const dispatch = useDispatch();
   const [filters, setFilters] = useState({
     name: "",
     desc: "",
@@ -20,20 +21,31 @@ function RecommendedProd() {
     resultsPerPage: 10,
     page: 1,
   });
-  let q = new URLSearchParams(filters).toString();
+  const q = new URLSearchParams(filters).toString();
+
   useEffect(() => {
     dispatch(fetchProductswithQuery(q));
-  }, []);
+  }, [dispatch, q]);
 
-  console.log(products);
+  useEffect(() => {
+    if (products) {
+      setRecom(products);
+    }
+  }, [products]);
 
   return (
-    <div className="text-black text-center bg-gray-200 my-3 py-4 ">
-      <p className="py-5 font-semibold text-3xl ">Recommended Products</p>
-      <div className="flex flex-wrap gap-7 my-5 items-center justify-center ">
-        {recom.products?.map((product, index) => (
-          <Product key={index} product={product} />
-        ))}
+    <div className="text-black text-center container  my-1 py-2">
+      <p className="py-2 md:ml-28 font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-sky-600">
+        Recommended Products
+      </p>
+      <div className="flex flex-wrap gap-7 my-5 items-center justify-center">
+        {isLoading && <Loader span={"Loading Recommended Products"} />}
+        {isError && <div>Error in Fetching Products</div>}
+        {!isLoading &&
+          !isError &&
+          products?.products?.map((product, index) => (
+            <Product key={index} product={product} />
+          ))}
       </div>
     </div>
   );

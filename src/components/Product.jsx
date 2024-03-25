@@ -104,13 +104,15 @@ function Product({ product }) {
             <p className="text-xs text-gray-500 ml-1">(200)</p>
           </span>
         </div>
-        <p className="text-lg font-semibold text-black">{name}</p>
+        <p className="text-lg font-semibold capitalize text-left text-black">
+          {name}
+        </p>
         <div className="flex justify-between items-center">
-          <p className="text-lg font-semibold text-blue-700">${price}</p>
+          <p className="text-lg font-semibold text-blue-700">₹{price}</p>
           {/* Add to Cart button (uncomment and customize) */}
           <Button
             classes={"bg-blue-700 text-white hover:bg-blue-800"}
-            text={"Add to Cart"}
+            text={"Buy Now"}
             icon={<MdShoppingCartCheckout />}
           />
         </div>

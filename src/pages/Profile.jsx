@@ -7,6 +7,9 @@ import MyProfile from "../components/profile/MyProfile";
 import Orders from "../components/profile/Orders";
 import Logout from "../components/profile/Logout";
 import AllOrders from "../components/order/AllOrders";
+import { FaHamburger, FaUsers } from "react-icons/fa";
+import { RxHamburgerMenu } from "react-icons/rx";
+import CartPage from "../components/CartPage";
 
 function Profile() {
   const { user } = useSelector((state) => state.user);
@@ -23,13 +26,14 @@ function Profile() {
       icon: <GiNotebook />,
       component: <AllOrders />,
     },
-    {
-      name: "update",
-      icon: <MdUpdate />,
-    },
+    // {
+    //   name: "update",
+    //   icon: <MdUpdate />,
+    // },
     {
       name: "cart",
       icon: <CgShoppingCart />,
+      component:<CartPage/>
     },
     {
       name: "logout",
@@ -37,27 +41,50 @@ function Profile() {
       component: <Logout />,
     },
   ];
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleSidebarToggle = () => setIsOpen(!isOpen);
+
   return (
-    <div className="flex h-[100%]">
+    <div className="flex h-full">
       {/* Sidebar */}
-      <section className="w-[8%] h-full text-center capitalize bg-gray-300 shadow-xl">
-        {navigation.map((e, i) => (
-          <p
-            key={i}
-            className={`py-6  hover:scale-105 duration-150 cursor-pointer flex justify-center items-center gap-2 text-lg ${
-              page === e.name
-                ? "bg-blue-500 border-r-4 border-sky-900 text-white"
-                : ""
-            }`}
-            onClick={() => setPage(e.name)}
-          >
-            {e.icon}
-            {e.name}
-          </p>
-        ))}
+      <section
+        className={` 
+           transition-all duration-500 ease-in-out z-10
+          h-fill w-[200px] bg-slate-600 shadow-2xl
+          ${isOpen ? "w-[40px] " : ""}
+        `}
+      >
+        <button
+          className="sticky left-1 top-14 bg-blue-500 text-xl p-1 rounded focus:outline-none"
+          onClick={handleSidebarToggle}
+        >
+          <RxHamburgerMenu />
+        </button>
+        <nav className="flex flex-col mt-8 gap-4 px-0.5 transition-all duration-500 ease-in-out capitalize">
+          {navigation.map((e, i) => (
+            <p
+              key={i}
+              className={`
+                flex items-center justify-start p-2 rounded-md shadow-sm text-lg hover:bg-blue-500 focus:outline-none 
+                ${page === e.name ? "bg-blue-500 text-white" : ""}
+              `}
+              onClick={() => setPage(e.name)}
+            >
+              {e.icon}
+              <span
+                className={` transition-all duration-500 ease-in-out ml-2 ${
+                  isOpen && "hidden"
+                }`}
+              >
+                {e.name}
+              </span>
+            </p>
+          ))}{" "}
+        </nav>
       </section>
       {/* Main */}
-      <main className="w-[92%] transition-all duration-300">
+      <main className="w-full">
         {navigation.map((navItem, index) => (
           <React.Fragment key={index}>
             {page === navItem.name && navItem.component}

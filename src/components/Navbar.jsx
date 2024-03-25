@@ -24,7 +24,7 @@ function Navbar() {
   let { isAuthenticated, user } = useSelector((state) => state.user);
   useEffect(() => {
     // nav("/");
-    loadCartFromLocalStorage(dispatch)
+    loadCartFromLocalStorage(dispatch);
     dispatch(checkAuth());
   }, [isAuthenticated]);
   let links = [
@@ -36,10 +36,10 @@ function Navbar() {
       to: "/allproducts",
       text: "All Products",
     },
-    {
-      to: "/cart",
-      text: "Cart",
-    },
+    // {
+    //   to: "/cart",
+    //   text: "Cart",
+    // },
   ];
   if (user?.role === "admin") {
     links.push({
@@ -61,10 +61,14 @@ function Navbar() {
           <Logo classes={"text-lg font-semibold"} />
         </Link>
         {/* links */}
-        <div className="hidden md:flex">
+        <div className="hidden md:flex ">
           {links.map((ele, i) => {
             return (
-              <Link className="mx-2 text-md " key={i} to={ele.to}>
+              <Link
+                className="mx-2 text-md hover:scale-105 duration-100"
+                key={i}
+                to={ele.to}
+              >
                 {ele.text}
               </Link>
             );
@@ -83,23 +87,25 @@ function Navbar() {
                 </Link>
               );
             })}
-            <div>
-              <Link to={"/login"} className="">
-                <Button text={"Login"} classes={"mx-1 shadow-xl  px-4"} />
-              </Link>
-              <Link to={"/signup"}>
-                <Button text={"SignUp"} classes={"mx-1 px-4"} />
-              </Link>
-            </div>
+            {!isAuthenticated && (
+              <div>
+                <Link to={"/login"} className="">
+                  <Button text={"Login"} classes={"mx-1 shadow-xl  px-4"} />
+                </Link>
+                <Link to={"/signup"}>
+                  <Button text={"SignUp"} classes={"mx-1 px-4"} />
+                </Link>
+              </div>
+            )}
           </div>
         )}
         {/*side  buttons */}
         <div className="flex gap-3 items-center justify-center text-2xl">
           {isAuthenticated ? (
             <>
-              <Link to={"/profile"} className="text-2xl">
+              {/* <Link to={"/profile"} className="text-2xl">
                 <CgSearch />
-              </Link>
+              </Link> */}
               <Link to={"/cart"} className="text-2xl">
                 <BsCart2 />
               </Link>
@@ -118,9 +124,9 @@ function Navbar() {
               <Link to={"/login"} className="hidden">
                 <Button text={"Login"} classes={"mx-1 shadow-xl  px-4"} />
               </Link>
-              <Link to={"/signup"} className="hidden">
+              {/* <Link to={"/signup"} className="hidden">
                 <Button text={"SignUp"} classes={"mx-1 px-4"} />
-              </Link>
+              </Link> */}
               <Link to={"/profile"} className="text-2xl">
                 <CgSearch />
               </Link>
