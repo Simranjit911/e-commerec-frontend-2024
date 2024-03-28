@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { fetchSingleProduct } from "../redux/productSlice";
 import Loader from "../components/Loader";
 import ReactStars from "react-rating-stars-component";
@@ -10,24 +10,26 @@ import Reviews from "../components/Reviews";
 import { addToCart } from "../redux/cartSlice";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
+
 function ProductDetails() {
   let { id } = useParams();
+  let history = useNavigate();
   let dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchSingleProduct(id));
+    dispatch(fetchSingleProduct(id))
   }, [dispatch, id]);
   const { singleProduct } = useSelector((state) => state.products);
   let { product } = singleProduct;
-  console.log(singleProduct);
+
   let options = {
     edit: false,
     size: window.innerWidth < 600 ? 14 : 20,
-    value: product?.rating,
-    activeColor: "#3182CE", // Blue color for rating stars
+    value: product?.ratings,
+    activeColor: "salmon", // Blue color for rating stars
+    // activeColor: "#3182CE",
     isHalf: true,
   };
   function addCart(prod) {
-    console.log(prod);
     dispatch(addToCart(prod));
   }
   return (
@@ -36,16 +38,19 @@ function ProductDetails() {
         <Loader />
       ) : (
         <>
-          <p className=" flex text-black items-center capitalize  px-8 py-4">
-            <Link to={"/"} className="font-bold text-black text-4xl ">
+          <div className=" flex text-black items-center capitalize  px-8 py-4">
+            <p
+              onClick={() => history(-1)}
+              className="font-bold text-black text-4xl "
+            >
               <IoIosArrowRoundBack />
-            </Link>
+            </p>
             <span className="ml-3 text-gray-600 text-md flex items-center gap-1 text-sm md:text-md">
               {product?.category}
               <MdNavigateNext />
               {product?.name}
             </span>
-          </p>
+          </div>
           <div className="flex flex-col md:flex-row justify-center items-center md:items-start px-8 py-4 bg-blue-100 rounded-lg shadow-lg">
             {/* Product image */}
             <div className="md:w-[40%] px-4 my-auto">
@@ -100,15 +105,7 @@ function ProductDetails() {
               <p className="text-lg font-normal mb-4">{product.desc}</p>
               {/* Quantity selector and add to cart button */}
               <div className="flex items-center mb-4">
-                {/* <Button
-                  text={"+"}
-                  classes={"bg-gray-500 px-3 py-1 text-lg mr-2"}
-                />
-                <p className="text-lg">1</p>
-                <Button
-                  text={"-"}
-                  classes={"bg-gray-500 px-3 py-1 text-lg ml-2"}
-                /> */}
+               
                 <Button
                   fn={() => addCart(product)}
                   text={"Add to Cart"}
@@ -120,8 +117,10 @@ function ProductDetails() {
           </div>
           {/* Reviews */}
           <div className="mx-auto my-8 px-8">
-            <p className="text-3xl font-semibold mb-4">User Reviews</p>
-            <Reviews />
+            <p className="py-2 md:ml-28 font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-sky-600">
+              Customer Reviews
+            </p>
+            <Reviews pId={id} productRating={product?.ratings}/>
           </div>
         </>
       )}

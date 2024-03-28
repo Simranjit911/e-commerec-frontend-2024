@@ -82,7 +82,7 @@ export const updateProduct = createAsyncThunk('product/update', async ({ id, dat
     const config = {
       headers: { "Content-Type": "application/json" }
     };
-    console.log(data);
+
     let res = await axios.put(`/product/update/${id}`, data, config);
     console.log(res.data);
     if (res.data.msg == "Product Updated!") {
@@ -97,6 +97,42 @@ export const updateProduct = createAsyncThunk('product/update', async ({ id, dat
 });
 
 
+// Reviews
+//get all review
+export const addProductReview = createAsyncThunk('product/review/new', async (data, thunkAPI) => {
+  try {
+    const config = {
+      headers: { "Content-Type": "application/json" }
+    };
+    let res = await axios.post('/product/addreview', data, config)
+    if (res.status == 201) {
+      toast.success("Product Reviewed Successfully")
+    }
+
+
+  } catch (error) {
+    console.log(error)
+    toast.error("Error in Adding Review")
+  }
+})
+export const deleteReview = createAsyncThunk(
+  'product/review/delete',
+  async (data, thunkAPI) => {
+    try {
+      const config = {
+        headers: { "Content-Type": "application/json" }
+      };
+      console.log(data)
+      const res = await axios.delete('/product/deletereview',{data},config);
+      if (res.status === 200) {
+        toast.success('Review Deleted!');
+      }
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
 const initialState = {
   products: [],
   isError: false,
@@ -105,7 +141,8 @@ const initialState = {
     product: {},
     isLoading: false,
     isError: false
-  }
+  },
+
 };
 
 const productSlice = createSlice({
