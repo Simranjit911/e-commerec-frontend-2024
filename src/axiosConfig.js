@@ -1,6 +1,6 @@
 import axios from "axios";
 axios.defaults.withCredentials=true
 let instance = axios.create({
-    baseURL: "http://localhost:8000"
+    baseURL: "https://prokart-ecommerce-backend-2024.vercel.app"
 })
 export default instance
