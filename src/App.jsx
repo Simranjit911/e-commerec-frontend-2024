@@ -17,6 +17,7 @@ import ProductUpdate from "./pages/ProductUpdate";
 import CartPage from "./components/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderDetails from "./components/order/OrderDetails";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
@@ -27,10 +28,12 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/allproducts/:searchval" element={<AllProducts />} />
         <Route path="/allproducts" element={<AllProducts />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/success" element={<SuccessPage />} />
         <Route path="/cancel" element={<CancelPage />} />
+        <Route path="*" element={<NotFound />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />

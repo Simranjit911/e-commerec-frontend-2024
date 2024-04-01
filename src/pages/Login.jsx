@@ -8,7 +8,7 @@ import { loginUser } from "../redux/userSlice";
 
 const Login = () => {
   const [inputVal, setInputVal] = useState({
-    email: "s1@g.com",
+    email: "",
     password: "",
   });
   let dispatch = useDispatch();
@@ -35,7 +35,7 @@ const Login = () => {
     if (inputVal.password === "") {
       return toast.error("Enter password");
     }
-  
+
     dispatch(loginUser(inputVal));
   }
   return (
@@ -71,9 +71,12 @@ const Login = () => {
           fn={handleLogin}
           classes={"w-full md:w-[80%] mx-auto py-2 text-lg"}
         />
-        <Link to={"/"} className="underline text-right text-blue-600">
-          Forget Password?
-        </Link>
+        <span className="items-right justify-end flex gap-1">
+          New User?
+          <Link to={"/signup"} className="underline text-right text-blue-600">
+            Register Now!
+          </Link>
+        </span>
       </div>
     </div>
   );

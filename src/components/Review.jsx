@@ -34,7 +34,7 @@ function Review({ review }) {
               <RxPencil1 />
             </button>
           )} */}
-          {user._id === review.user && (
+          {user?._id === review.user && (
             <button
               className="hover:scale-110 duration-200"
               onClick={() => {

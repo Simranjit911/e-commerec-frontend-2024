@@ -94,8 +94,9 @@ function CheckoutPage() {
 
     if (selectedPaymentMethod === "Card") {
       makePayment();
+      dispatch(createOrder(orderData))
     } else {
-      dispatch(createOrder(orderData));
+      dispatch(createOrder(orderData))
       setTimeout(() => {
         nav("/success");
       }, 1500);

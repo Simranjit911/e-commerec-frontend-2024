@@ -18,7 +18,6 @@ function SuccessPage() {
   //   }
   // }, []); // Empty dependency array ensures useEffect runs only once
   useEffect(() => {
-    console.log("call");
     localStorage.removeItem("cart");
     saveCartToLocalStorage([]);
     loadCartFromLocalStorage(dispatch);
@@ -28,7 +27,7 @@ function SuccessPage() {
     <div className="bg-green-100 min-h-screen flex justify-center items-center">
       <div className="bg-green-200 p-8 rounded shadow-2xl text-center">
         <h2 className="text-2xl font-semibold text-green-800 mb-4">
-          Payment Successful
+          Order Successful
         </h2>
         <p className="text-gray-700 mb-8">Thank you for your purchase!</p>
         <Link

@@ -11,8 +11,7 @@ const Register = () => {
   const dispatch = useDispatch();
   let nav = useNavigate();
   useEffect(() => {
-    console.log("auth");
-    console.log("useffect call nav");
+
     if (isAuthenticated) {
       nav("/");
     }
@@ -22,8 +21,8 @@ const Register = () => {
   let [file, setFile] = useState();
   const [inputVal, setInputVal] = useState({
     name: "",
-    email: "s@g.com",
-    password: "1",
+    email: "",
+    password: "",
     avatar: null,
   });
 

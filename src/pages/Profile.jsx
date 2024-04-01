@@ -13,7 +13,7 @@ import CartPage from "../components/CartPage";
 
 function Profile() {
   const { user } = useSelector((state) => state.user);
-  console.log(user.role);
+
   const [page, setPage] = useState("profile");
   const navigation = [
     {
@@ -33,7 +33,7 @@ function Profile() {
     {
       name: "cart",
       icon: <CgShoppingCart />,
-      component:<CartPage/>
+      component: <CartPage />,
     },
     {
       name: "logout",
@@ -41,7 +41,7 @@ function Profile() {
       component: <Logout />,
     },
   ];
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleSidebarToggle = () => setIsOpen(!isOpen);
 

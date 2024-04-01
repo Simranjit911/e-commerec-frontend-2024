@@ -8,6 +8,7 @@ import Button from "./Button";
 import ReactStars from "react-rating-stars-component";
 import toast from "react-hot-toast";
 import { getLoggedUserOrder } from "../redux/orderSlice";
+import { Link } from "react-router-dom";
 
 function Reviews({ pId, productRating }) {
   const dispatch = useDispatch();
@@ -23,25 +24,29 @@ function Reviews({ pId, productRating }) {
   const { user } = useSelector((state) => state.user);
   const { myOrders } = useSelector((state) => state.order);
   const [error, setError] = useState(null);
-
+  let { order } = myOrders;
   useEffect(() => {
     fetchReviews();
     dispatch(getLoggedUserOrder());
   }, [pId, formData.startSelected]);
-  console.log(myOrders);
 
   function checkOrderBeforeReview() {
-    console.log("call");
-    let orderLen = myOrders.order.order.length;
-    let findOrder = myOrders.order.order.orderedItems.filter(
-      (i) => i.productId == pId
-    );
-    console.log(findOrder, orderLen);
-    // if (orderLen < 1) {
-    //   return false;
-    // }
-
-
+    if (order.total < 1) {
+      return false;
+    } else {
+      let { order: orders } = order;
+      let orderedProd = orders.map((i) => i.orderedItems);
+      orderedProd[0].map((e) => console.log(e.name));
+      let findOrder;
+      orderedProd[0].map((i) => {
+        if (i.productId == pId) {
+          findOrder = true;
+        } else {
+          findOrder = false;
+        }
+      });
+      return findOrder;
+    }
   }
 
   const fetchReviews = async () => {
@@ -58,6 +63,8 @@ function Reviews({ pId, productRating }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      let res = checkOrderBeforeReview();
+      console.log(res);
       if (!startSelected) {
         return toast.error("Select Rating");
       }
@@ -67,20 +74,23 @@ function Reviews({ pId, productRating }) {
       if (comment.length > 50) {
         return toast.error("Describe comment in 50 words");
       }
-      checkOrderBeforeReview();
-      // const data = { rating, comment, description, productId: pId };
-      // dispatch(addProductReview(data));
+      if (!checkOrderBeforeReview()) {
+        return toast.error("You must order the product before adding a review");
+      }
+      console.log(res);
+      const data = { rating, comment, description, productId: pId };
+      dispatch(addProductReview(data));
 
-      // setFormData({
-      //   rating: 0,
-      //   comment: "",
-      //   description: "",
-      //   startSelected: false,
-      // });
-      // setTimeout(() => {
-      //   // fetchReviews();
-      //   dispatch(fetchSingleProduct(pId));
-      // }, 300);
+      setFormData({
+        rating: 0,
+        comment: "",
+        description: "",
+        startSelected: false,
+      });
+      setTimeout(() => {
+        // fetchReviews();
+        dispatch(fetchSingleProduct(pId));
+      }, 300);
     } catch (error) {
       setError(error.message);
     }
@@ -108,65 +118,79 @@ function Reviews({ pId, productRating }) {
       {error && <div>Error: {error}</div>}
 
       <div className="flex flex-col md:flex-row-reverse ">
-        <form
-          onSubmit={handleSubmit}
-          className="text-center w-full md:w-[50%] "
-        >
-          <div className="flex flex-col w-full gap-4 justify-center text-center items-center">
-            <label className="text-xl font-normal text-center py-1">
-              Add Product Review
-              <ReactStars
-                count={5}
-                onChange={(newRating) => {
-                  setFormData({
-                    ...formData,
-                    rating: newRating,
-                    startSelected: true,
-                  });
-                }}
-                size={35}
-                activeColor="salmon"
-              />
-            </label>
-
-            <input
-              type="text"
-              value={comment}
-              required
-              maxLength={50}
-              placeholder="Describe your comment in 50 words"
-              className="md:w-[75%] px-2 py-1 text-lg w-[80%]"
-              onChange={(e) =>
-                setFormData({ ...formData, comment: e.target.value })
-              }
-            />
-
-            <textarea
-              maxLength={100}
-              value={description}
-              required
-              placeholder="Describe your Experience in 100 words"
-              className="md:w-[75%] px-2 py-1 text-lg w-[80%]"
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
-              rows="4"
-            />
+        {!user ? (
+          <div className="text-xl text-center my-auto w-full md:w-[50%] items-center justify-center">
+            Please{" "}
+            <Link
+              to={"/login"}
+              className="text-blue-500 underline hover:text-blue-800"
+            >
+              Login!
+            </Link>{" "}
+            to write review
           </div>
-          <Button
-            type="submit"
-            text={"Submit Review"}
-            classes={"my-3 text-xl md:w-1/2"}
-          />
-        </form>
+        ) : (
+          <form
+            onSubmit={handleSubmit}
+            className="text-center w-full md:w-[50%] "
+          >
+            <div className="flex flex-col w-full gap-4 justify-center text-center items-center">
+              <label className="text-xl font-normal text-center py-1">
+                Add Product Review
+                <ReactStars
+                  count={5}
+                  onChange={(newRating) => {
+                    setFormData({
+                      ...formData,
+                      rating: newRating,
+                      startSelected: true,
+                    });
+                  }}
+                  size={35}
+                  activeColor="salmon"
+                />
+              </label>
+
+              <input
+                type="text"
+                value={comment}
+                required
+                maxLength={50}
+                placeholder="Describe your comment in 50 words"
+                className="md:w-[75%] px-2 py-1 text-lg w-[80%]"
+                onChange={(e) =>
+                  setFormData({ ...formData, comment: e.target.value })
+                }
+              />
+
+              <textarea
+                maxLength={100}
+                value={description}
+                required
+                placeholder="Describe your Experience in 100 words"
+                className="md:w-[75%] px-2 py-1 text-lg w-[80%]"
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
+                rows="4"
+              />
+            </div>
+            <Button
+              type="submit"
+              text={"Submit Review"}
+              classes={"my-3 text-xl md:w-1/2"}
+            />
+          </form>
+        )}
+
         {reviews.length > 0 ? (
           <div className="md:w-[50%] flex justify-center items-center flex-wrap gap-6 my-6 overflow-x-auto md:px-4 py-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
             <div className="flex items-center text-xl font-semibold  gap-2">
-              <p className="text-xl font-semibold">Overall Rating:</p>
+              <p className="md:text-xl font-semibold">Overall Rating:</p>
               <ReactStars
                 count={5}
                 value={Number(productRating.toFixed(2))} // You should replace this with your actual product rating value
-                size={34}
+                size={25}
                 edit={false} // Disable editing of the rating
                 activeColor="salmon" // Change the color of the stars
                 // You can use className or classNames

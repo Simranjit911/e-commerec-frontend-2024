@@ -34,18 +34,20 @@ function RecommendedProd() {
   }, [products]);
 
   return (
-    <div className="text-black text-center container  my-1 py-2">
-      <p className="py-2 md:ml-28 font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-sky-600">
-        Recommended Products
-      </p>
-      <div className="flex flex-wrap gap-7 my-5 items-center justify-center">
-        {isLoading && <Loader span={"Loading Recommended Products"} />}
-        {isError && <div>Error in Fetching Products</div>}
-        {!isLoading &&
-          !isError &&
-          products?.products?.map((product, index) => (
-            <Product key={index} product={product} />
-          ))}
+    <div>
+      <div className="text-black text-center  my-1 py-2">
+        <p className="py-2 md:ml-28 font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-sky-600">
+          Recommended Products
+        </p>
+        <div className="flex flex-wrap gap-7 my-5 items-center justify-center ">
+          {isLoading && <Loader span={"Loading Recommended Products"} />}
+          {isError && <div>Error in Fetching Products</div>}
+          {!isLoading &&
+            !isError &&
+            products?.products?.map((product, index) => (
+              <Product key={index} product={product} />
+            ))}
+        </div>
       </div>
     </div>
   );

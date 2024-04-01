@@ -6,7 +6,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 // Async thunk action to create a new order
 export const createOrder = createAsyncThunk('order/new', async (data, nav, thunkAPI) => {
     try {
-        console.log(data.paymentMethod)
         const config = {
             headers: { 'Content-Type': 'application/json' }
         }

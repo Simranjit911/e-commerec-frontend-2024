@@ -16,30 +16,39 @@ const OrderDetails = ({ order }) => {
   } = order;
 
   return (
-    <div className="bg-slate-400 my-5 md:w-[90%] mx-2 rounded-lg shadow-xl container p-4 flex flex-col gap-4 md:flex-row md:items-center">
+    <div className="bg-gray-100 container max-w-screen-lg rounded-lg p-4 shadow-xl w-full md:w-[80%] mx-auto my-5 md:flex md:items-center capitalize gap-4">
       {/* Left section containing order details */}
-      <div className="flex flex-col gap-2 w-full md:w-1/2">
-        <h2 className="text-xl font-medium">Order #{_id.substring(0, 7)}</h2>
-        <p className="text-gray-700">Ordered at: {orderedTime}</p>
-        <p className="text-gray-700">Status: {orderStatus}</p>
-        <p className="text-gray-700">Payment Method: {paymentMethod}</p>
+      <div className="flex flex-col gap-2 md:gap-4 w-full md:w-1/2 capitalize mb-3">
+        <h2 className="text-xl font-semibold text-green-700">
+          Order No. #{_id.substring(0, 9)}
+        </h2>
+        <p className="text-gray-700 ">
+          <span className="font-semibold">Ordered at:</span> {orderedTime}
+        </p>
         <p className="text-gray-700">
-          Shipping Address: {shippingInfo.address}, {shippingInfo.city},{" "}
-          {shippingInfo.state} {shippingInfo.pinCode}
+          <span className="font-semibold">Status:</span> {orderStatus}
+        </p>
+        <p className="text-gray-700">
+          <span className="font-semibold">Payment Method:</span> {paymentMethod}
+        </p>
+        <p className="text-gray-700">
+          <span className="font-semibold">Shipping Address:</span>{" "}
+          {shippingInfo.address}, {shippingInfo.city}, {shippingInfo.state}{" "}
+          {shippingInfo.pinCode}
         </p>
       </div>
       {/* Right section containing ordered items */}
-      <div className="flex flex-col gap-4 w-full md:w-1/2">
+      <div className="flex flex-col gap-2 w-full md:w-1/2">
         <h3 className="text-xl font-medium">Items Ordered</h3>
         {/* Mapping over ordered items */}
         {orderedItems.map((item) => (
-          <div key={item._id} className="flex items-center gap-2">
+          <div key={item._id} className="flex items-center gap-4">
             <img
               src={item.image}
               alt={item.name}
               className="w-20 h-20 object-cover rounded-lg"
             />
-            <div className="text-left">
+            <div className="flex flex-col">
               <p className="font-medium">{item.name}</p>
               <p className="text-gray-700">Qty: {item.qty}</p>
               <p className="text-gray-700">Price: &#8377;{item.price}</p>
@@ -53,7 +62,7 @@ const OrderDetails = ({ order }) => {
         {/* Link to order details page */}
         <Link
           to={`/order-details/${_id}`}
-          className="inline-block px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg text-center hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300"
+          className="inline-block px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300"
         >
           Order Details
         </Link>
@@ -73,13 +82,17 @@ const AllOrders = () => {
   }, [dispatch]);
 
   return (
-    <div className="w-full mx-auto py-3  flex justify-center items-center flex-col">
+    <div className="w-full max-w-screen-lg min-h-[500px]  mx-auto py-8 px-4">
       {/* Title */}
-      <h1 className="text-3xl font-bold mb-6">All Orders</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">My Orders</h1>
       {/* Mapping over user orders and rendering OrderDetails component */}
-      {myOrders?.order?.order?.map((order) => (
-        <OrderDetails key={order._id} order={order} />
-      ))}
+      {myOrders?.order?.order?.length > 0 ? (
+        myOrders?.order?.order?.map((order) => (
+          <OrderDetails key={order._id} order={order} />
+        ))
+      ) : (
+        <div className="text-center">You Have Not Ordered anyrhing yet</div>
+      )}
     </div>
   );
 };
