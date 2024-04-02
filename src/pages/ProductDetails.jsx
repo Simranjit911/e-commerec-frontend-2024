@@ -16,7 +16,7 @@ function ProductDetails() {
   let history = useNavigate();
   let dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchSingleProduct(id))
+    dispatch(fetchSingleProduct(id));
   }, [dispatch, id]);
   const { singleProduct } = useSelector((state) => state.products);
   let { product } = singleProduct;
@@ -33,9 +33,11 @@ function ProductDetails() {
     dispatch(addToCart(prod));
   }
   return (
-    <>
-      {singleProduct.isLoading == true ? (
-        <Loader />
+    <div className="min-h-[500px] my-auto">
+      {singleProduct?.isLoading == true ? (
+        <div className="h-full mt-36">
+          <Loader span={"Loading Product"} />
+        </div>
       ) : (
         <>
           <div className=" flex text-black items-center capitalize  px-8 py-4">
@@ -83,29 +85,28 @@ function ProductDetails() {
               {/* Product price */}
               <div className="mb-4 flex items-center">
                 <p className="text-3xl text-blue-600 font-semibold">
-                  ₹{product.price}
+                  ₹{product?.price}
                 </p>
                 <p className="text-lg line-through text-slate-600 ml-2">
-                  ₹{(product.price * 1.5).toFixed(2)}
+                  ₹{(product?.price * 1.5).toFixed(2)}
                 </p>
               </div>
               {/* Stock status */}
               <p className="mb-4 flex items-center">
                 <span
                   className={`  text-white px-2 py-1 uppercase text-xs ${
-                    product.stock <= 1 ? "bg-red-500" : "bg-green-500"
+                    product?.stock <= 1 ? "bg-red-500" : "bg-green-500"
                   }`}
                 >
-                  {product.stock < 1 && "Out Of Stock"}
-                  {product.stock == 1 && "Last Unit"}
-                  {product.stock > 1 && "In Stock"}
+                  {product?.stock < 1 && "Out Of Stock"}
+                  {product?.stock == 1 && "Last Unit"}
+                  {product?.stock > 1 && "In Stock"}
                 </span>
               </p>
               {/* Product description */}
-              <p className="text-lg font-normal mb-4">{product.desc}</p>
+              <p className="text-lg font-normal mb-4">{product?.desc}</p>
               {/* Quantity selector and add to cart button */}
               <div className="flex items-center mb-4">
-               
                 <Button
                   fn={() => addCart(product)}
                   text={"Add to Cart"}
@@ -120,11 +121,11 @@ function ProductDetails() {
             <p className="py-2 md:ml-28 font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-sky-600">
               Customer Reviews
             </p>
-            <Reviews pId={id} productRating={product?.ratings}/>
+            <Reviews pId={id} productRating={product?.ratings} />
           </div>
         </>
       )}
-    </>
+    </div>
   );
 }
 

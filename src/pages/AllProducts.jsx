@@ -7,11 +7,12 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { BsFilter } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import { DarkModeContext } from "../context/DarkModeContext";
+import { MdNotificationsActive } from "react-icons/md";
 
 function AllProducts() {
   let { searchval } = useParams();
   let { filters, setFilters } = useContext(DarkModeContext);
-  let [filterlen,setfilterlen]=useState(0)
+  let [filterlen, setfilterlen] = useState(0);
   // const [filters, setFilters] = useState({
   //   name: searchval || "",
   //   desc: "",
@@ -65,34 +66,35 @@ function AllProducts() {
     }
     dispatch(fetchProductswithQuery(queryParams));
   }, [filters.page, dispatch, queryParams]);
-  console.log(filters);
+
   const [isOpen, setIsOpen] = useState(true);
-  const handleSidebarToggle = () => setIsOpen(!isOpen);
+  const handleSidebarToggle = () => {
+    setIsOpen((p) => !p);
+  };
   return (
     <>
-      <div className="flex">
+      <div className="flex min-h-[600px] ">
         {/* Filters */}
         <aside
-          className={` absolute -left-3
-           transition-all duration-1000 ease-in-out z-10 px-4
+          className={` absolute left-0 min-h-screen
+           transition-all duration-500 ease-in-out z-10 
           h-[100%]  bg-slate-200 shadow-2xl
-          ${isOpen ? "w-[0px] " : "w-auto"}
+          ${!isOpen ? "w-[220px]" : "w-0 "}
         `}
         >
           <button
-            className="sticky left-1 top-14 bg-blue-500 text-md md:text-xl p-1 rounded focus:outline-none flex items-center mx-3 transition-all duration-500"
+            className="sticky left-2 top-14 bg-blue-500 text-md md:text-xl p-1 rounded focus:outline-none flex items-center mx-3 transition-all duration-500"
             onClick={handleSidebarToggle}
           >
             <BsFilter />
             Filters{" "}
             <span className="bg-blue-800 text-xs p-1 rounded-[100%] text-white shadow-xl absolute bottom-6 left-16 ">
-              {filters.category != "" && 1}
-              {filters.rating != "" && 2}
+            {filters.name !== "" || filters.category !== "" || filters.rating !== "" ? <MdNotificationsActive /> : null}
             </span>
           </button>
           {/* Search  */}
           <div
-            className={` transition-all duration-500 ease-in-out ml-2 my-4  mt-8 ${
+            className={` transition-all duration-500 ease-in-out ml-3 my-4  mt-8 ${
               isOpen && "hidden"
             }`}
           >
@@ -109,7 +111,7 @@ function AllProducts() {
 
           {/* Category filter */}
           <div
-            className={` transition-all duration-500 ease-in-out ml-2 my-4 ${
+            className={` transition-all duration-500 ease-in-out ml-3 my-4 ${
               isOpen && "hidden"
             }`}
           >
@@ -153,7 +155,7 @@ function AllProducts() {
           </div>
           {/* Rating filter */}
           <div
-            className={` transition-all duration-500 ease-in-out ml-2 mb-4 ${
+            className={` transition-all duration-500 ease-in-out ml-3 mb-4 ${
               isOpen && "hidden"
             }`}
           >
@@ -198,7 +200,7 @@ function AllProducts() {
           {/* Apply filters button */}
           <button
             onClick={handleApplyFilters}
-            className={`bg-blue-600 text-white px-4 py-2 cursor-pointer hover:bg-blue-900 transition-all duration-500 ease-in-out ml-2 ${
+            className={`bg-blue-600 text-white ml-3 px-4 py-2 cursor-pointer hover:bg-blue-900 transition-all duration-500 ease-in-out  ${
               isOpen && "hidden"
             }`}
           >
@@ -209,7 +211,7 @@ function AllProducts() {
         {/* Main */}
         {isLoading && (
           <div className="my-6 mx-auto">
-            <Loader span={"Loading products All Products"} />
+            <Loader span={"Loading "} />
           </div>
         )}
         {!isLoading && isError && (

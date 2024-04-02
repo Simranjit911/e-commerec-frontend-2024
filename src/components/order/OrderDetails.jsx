@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getSingleOrder } from "../../redux/orderSlice";
 import Loader from "../Loader";
 
@@ -10,12 +10,18 @@ function OrderDetails() {
   const { singleOrder } = useSelector((state) => state.order);
   const { order: od, isLoading, isError } = singleOrder;
   const order = od ? od.order : null; // Add null check here
-
+  let nav = useNavigate();
   useEffect(() => {
     dispatch(getSingleOrder(id));
   }, [dispatch, id]);
 
-  if (isLoading) return <Loader />;
+  if (isLoading) {
+    return (
+      <div className="my-48">
+        <Loader span={"Loading Order"} />
+      </div>
+    );
+  }
   if (isError)
     return <div className="p-4 text-red-600">Error fetching order details</div>;
   if (!order) return null;
@@ -30,6 +36,7 @@ function OrderDetails() {
     isPaid,
     totalPrice,
   } = order;
+  console.log(orderedItems);
   // Define order stages
   const orderStages = ["Not Processed", "Packed", "Shipped", "Delivered"];
   const orderTrackingStages = [
@@ -42,7 +49,6 @@ function OrderDetails() {
   const currentStageIndex = orderStages.findIndex(
     (stage) => stage.toLowerCase() == orderStatus.toLowerCase()
   );
-  console.log(currentStageIndex);
 
   return (
     <div className="md:px-[20%] px-[10%] bg-gray-100 mx-auto p-4 rounded-lg shadow-lg">
@@ -81,7 +87,7 @@ function OrderDetails() {
             </p>
             <p className="text-gray-700">
               <span className="font-semibold">Payment Status:</span>{" "}
-              {isPaid=="yes" ? "Paid" : "Not Paid"}
+              {isPaid == "yes" ? "Paid" : "Not Paid"}
             </p>
           </div>
         </div>
@@ -120,7 +126,8 @@ function OrderDetails() {
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {orderedItems.map((item) => (
-          <div
+          <Link
+            to={`/product/${item.productId}`}
             key={item._id}
             className="flex items-center p-4 border rounded-lg shadow-md"
           >
@@ -136,7 +143,7 @@ function OrderDetails() {
               <p className="text-gray-700">Qty: {item.qty}</p>
               <p className="text-gray-700">Price: ₹{item.price}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       {/* price  */}

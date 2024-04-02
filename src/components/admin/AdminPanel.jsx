@@ -63,7 +63,7 @@ function AdminPanel() {
   const handleSidebarToggle = () => setIsOpen(!isOpen);
 
   return (
-    <div className={`flex h-full `}>
+    <div className={`flex h-full  `}>
       {/* Sidebar */}
       <section
         className={` 
@@ -102,7 +102,7 @@ function AdminPanel() {
       </section>
 
       {/* Main Content */}
-      <main className="w-full   ">
+      <main className="w-full  min-h-[600px]   ">
         {navigation.map((navItem) => (
           <React.Fragment key={navItem.name}>
             {page === navItem.name && navItem.component}

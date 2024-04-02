@@ -43,18 +43,17 @@ const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     console.log(1);
-    if (!file) {
-      toast.error("Select Profile");
-      console.log("hi");
-    }
-    console.log(file);
+    // if (!file) {
+    //   toast.error("Select Profile");
+    //   console.log("hi");
+    // }
     const formData = new FormData();
     formData.append("name", inputVal.name);
     formData.append("email", inputVal.email);
     formData.append("password", inputVal.password);
-    formData.append("avatar", file);
+    // formData.append("avatar", file);
 
-    dispatch(registerUser(formData));
+    dispatch(registerUser(inputVal));
   };
 
   return (
@@ -99,9 +98,8 @@ const Register = () => {
             accept="image/*"
             encType="multipart/form-data"
             ref={fileInp}
-            onChange={handleFileChange}
-            required
-            className="text-center flex justify-center items-center w-ful mx-auto"
+            onChange={handleFileChange}      
+            className="text-center flex justify-center items-center w-ful mx-auto hidden"
             id="avatar"
           />
           <label

@@ -32,12 +32,12 @@ function CheckoutPage() {
   }
 
   const [shippingInfo, setShippingInfo] = useState({
-    address: "1",
-    city: "1",
-    state: "1",
-    country: "1",
-    pinCode: "1",
-    phoneNo: "111111111",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+    pinCode: "",
+    phoneNo: "",
   });
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
 

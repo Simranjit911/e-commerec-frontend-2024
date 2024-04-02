@@ -51,7 +51,7 @@ function Products() {
       {isLoading && <Loader span={"Loading All Products"} />}
 
       {!isError && !isLoading && (
-        <div className="w-full px-4 bg-gray-800 text-white h-full flex flex-col justify-center items-center gap-4 py-4">
+        <div className="w-full  px-3 bg-gray-800 text-white h-full flex flex-col justify-center items-center gap-4 py-4">
           <div className="text-xl font-normal w-full flex  justify-around items-center">
             <span className="bg-blue-600 text-white rounded-md px-2 py-0.5 text-sm md:text-lg">
               Total Products:{totalProducts}

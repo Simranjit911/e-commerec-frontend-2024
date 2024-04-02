@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoggedUserOrder } from "../../redux/orderSlice";
 import { Link } from "react-router-dom";
+import Loader from "../Loader";
 
 const OrderDetails = ({ order }) => {
   // Destructuring order object
@@ -41,7 +42,7 @@ const OrderDetails = ({ order }) => {
       <div className="flex flex-col gap-2 w-full md:w-1/2">
         <h3 className="text-xl font-medium">Items Ordered</h3>
         {/* Mapping over ordered items */}
-        {orderedItems.map((item) => (
+        {orderedItems?.map((item) => (
           <div key={item._id} className="flex items-center gap-4">
             <img
               src={item.image}
@@ -75,11 +76,24 @@ const AllOrders = () => {
   // Redux hooks for dispatch and selector
   const dispatch = useDispatch();
   const { myOrders } = useSelector((state) => state.order);
-
+  let { order, isLoading, isError } = myOrders;
+  console.log(order, isLoading, isError);
   // Fetching user orders on component mount
   useEffect(() => {
     dispatch(getLoggedUserOrder());
   }, [dispatch]);
+  if (isLoading) {
+    return (
+      <div className="w-full h-full min-h-64">
+        <Loader span={"Loading Orders..."} />
+      </div>
+    );
+  }
+
+  // Handling error state
+  if (isError) {
+    return <div>Error occurred while fetching orders.</div>;
+  }
 
   return (
     <div className="w-full max-w-screen-lg min-h-[500px]  mx-auto py-8 px-4">

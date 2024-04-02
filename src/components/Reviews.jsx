@@ -36,7 +36,7 @@ function Reviews({ pId, productRating }) {
     } else {
       let { order: orders } = order;
       let orderedProd = orders.map((i) => i.orderedItems);
-      orderedProd[0].map((e) => console.log(e.name));
+
       let findOrder;
       orderedProd[0].map((i) => {
         if (i.productId == pId) {
@@ -52,7 +52,7 @@ function Reviews({ pId, productRating }) {
   const fetchReviews = async () => {
     try {
       const response = await axios.get(`/product/getallreviews/${pId}`);
-      setReviews(response.data.allreviews);
+      setReviews(response?.data?.allreviews);
       setLoading(false);
     } catch (error) {
       setError(error.message);

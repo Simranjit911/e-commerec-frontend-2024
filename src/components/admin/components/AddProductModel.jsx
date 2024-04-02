@@ -61,7 +61,7 @@ function AddProductModel({ fn }) {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-70 flex justify-center items-center z-50 overflow-auto">
-      <div className="bg-slate-300 px-8 py-4 rounded-lg relative top-56 md:w-[60%] shadow-xl h-fit ">
+      <div className="bg-slate-300 text-black px-8 py-4 rounded-lg relative top-56 md:w-[60%] shadow-xl h-fit ">
         <button
           onClick={() => fn()}
           className="absolute top-8 right-5 text-xl hover:scale-110 duration-100 p-2"

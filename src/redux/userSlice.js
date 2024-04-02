@@ -8,6 +8,7 @@ export const loginUser = createAsyncThunk("user/login", async (userData, thunkAP
         const config = {
             headers: { "Content-Type": "application/json" }
         };
+        console.log(userData)
 
         let response = await axios.post("/user/login", userData, config)
         if (response.status === 200) {
@@ -15,8 +16,7 @@ export const loginUser = createAsyncThunk("user/login", async (userData, thunkAP
         }
     } catch (error) {
         // Handle errors
-        console.error("Login error:", error.response ? error.response.data : error.message);
-        // Show error toast notification
+             // Show error toast notification
         toast.error(error.response ? error.response.data.msg : "Login Failed");
         // Reject with value to pass error to action payload
         return thunkAPI.rejectWithValue({ error: error.message });
@@ -26,8 +26,9 @@ export const loginUser = createAsyncThunk("user/login", async (userData, thunkAP
 export const registerUser = createAsyncThunk("user/register", async (userData, thunkAPI) => {
     try {
         const config = {
-            headers: { "Content-Type": "multipart/form-data" }
+            headers: { "Content-Type": "application/json" }
         };
+        console.log(userData)
         const response = await axios.post("/user/register", userData, config);
         if (response.status === 201) {
             return response.data;

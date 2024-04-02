@@ -6,13 +6,14 @@ import { MdShoppingCartCheckout } from "react-icons/md";
 
 function Product({ product }) {
   // Destructuring product object
-  const { _id, category, price, desc, images, rating, name } = product;
-
+  const { _id, category, price, desc, images, ratings, name, numOfReviews } =
+    product;
+  console.log(product);
   // Options for ReactStars component
   const options = {
     edit: false,
     size: window.innerWidth < 600 ? 14 : 18,
-    value: rating, // Use actual rating from product data
+    value: ratings || 0, // Use actual rating from product data
     activeColor: "gold",
     isHalf: true,
   };
@@ -20,7 +21,7 @@ function Product({ product }) {
   return (
     <Link
       to={`/product/${_id}`}
-      className="group relative bg-sky-100  rounded-lg shadow-xl shadow-slate-300 border border-slate-400 overflow-hidden transform hover:scale-102 transition duration-300 h-[250px] md:h-[384px] ease-in-out flex flex-col justify-between max-w-[300px] md:min-w-[300px] min-w-[200px] p-4 pb-0"
+      className="group relative bg-sky-100  rounded-lg shadow-xl shadow-slate-300 border border-slate-400 overflow-hidden transform hover:scale-105 transition duration-300 h-[250px] md:h-[384px] ease-in-out flex flex-col justify-between max-w-[200px] md:min-w-[300px]  p-4 pb-0"
     >
       {/* Product image */}
       <div className="group-hover:opacity-75 overflow-hidden md:h-[70%]">
@@ -37,11 +38,16 @@ function Product({ product }) {
           <p className="text-sm text-gray-500 uppercase">{category}</p>
           <span className="flex items-center text-sm">
             <ReactStars {...options} />
-            <p className="text-xs text-gray-500 ml-1">(200)</p>
+            <p className="text-xs text-gray-500 ml-1">
+              ({numOfReviews ? numOfReviews : 0})
+            </p>
           </span>
         </div>
-        <p className="text-lg font-normal capitalize text-left text-black">
-          {name}
+        <p className="text-lg font-normal capitalize text-left text-black md:hidden">
+          {name.length >= 16 ? `${name.slice(0, 16)}...` : name}
+        </p>
+        <p className="text-lg hidden font-normal capitalize text-left text-black md:block">
+          { name}
         </p>
         <div className="flex justify-between items-center">
           <p className="text-lg font-semibold text-blue-700">₹{price}</p>
