@@ -15,7 +15,6 @@ function Logout() {
   let { isAuthenticated, user } = useSelector((state) => state.user);
 
   useEffect(() => {
-    console.log("useEffect call nav");
     // nav("/");
     dispatch(checkAuth());
   }, [registerUser, loginUser, isAuthenticated]);

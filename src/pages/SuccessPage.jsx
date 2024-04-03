@@ -1,13 +1,16 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   loadCartFromLocalStorage,
   saveCartToLocalStorage,
 } from "../redux/cartSlice";
 import { useDispatch } from "react-redux";
+import { DarkModeContext } from "../context/DarkModeContext";
+import { createOrder, getLoggedUserOrder } from "../redux/orderSlice";
 
 function SuccessPage() {
   const dispatch = useDispatch();
+  let { orderData:od } = useContext(DarkModeContext);
   // const { productOrderData, setProductOrderData } = useContext(DarkModeContext);
   // console.log(productOrderData);
 
@@ -18,9 +21,21 @@ function SuccessPage() {
   //   }
   // }, []); // Empty dependency array ensures useEffect runs only once
   useEffect(() => {
-    localStorage.removeItem("cart");
-    saveCartToLocalStorage([]);
-    loadCartFromLocalStorage(dispatch);
+    let order = {};
+    const orderData = localStorage.getItem("orderData");
+    order = orderData ? JSON.parse(orderData) : {};
+    if (order.orderData != null || order.orderData!=undefined) {
+      if(od!=null){
+        dispatch(createOrder(od));
+      }else{
+        dispatch(createOrder(order.orderData));
+      }
+      localStorage.removeItem("cart");
+      localStorage.removeItem("orderData");
+      saveCartToLocalStorage([]);
+      loadCartFromLocalStorage(dispatch);
+      dispatch(getLoggedUserOrder())
+    }
   }, []);
 
   return (

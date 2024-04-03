@@ -10,7 +10,7 @@ export const createOrder = createAsyncThunk('order/new', async (data, nav, thunk
             headers: { 'Content-Type': 'application/json' }
         }
         const res = await axios.post("/order/new", data, config);
-        if (res.status == 200 && data.paymentMethod != "Card") {
+        if (res.status == 200 ) {
             toast.success("Order Placed")
             return res.data
         }
@@ -121,6 +121,8 @@ const orderSlice = createSlice({
         builder
             .addCase(getLoggedUserOrder.pending, (state) => {
                 state.myOrders.isLoading = true
+                state.myOrders.isError = true
+
             })
             .addCase(getLoggedUserOrder.rejected, (state, action) => {
                 state.myOrders.isLoading = false

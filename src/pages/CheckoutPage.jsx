@@ -6,11 +6,13 @@ import toast from "react-hot-toast";
 import { loadStripe } from "@stripe/stripe-js";
 
 import axios from "../axiosConfig";
+import { DarkModeContext } from "../context/DarkModeContext";
 
 // import { createOrder } from "../redux/orderSlice"; // Assuming you have an order slice with an action to create an order
 
 function CheckoutPage() {
   const dispatch = useDispatch();
+  let { orderData, setOrderData } = useContext(DarkModeContext);
   const { cart } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
   let nav = useNavigate();
@@ -73,7 +75,25 @@ function CheckoutPage() {
     }
 
     // Create order object
-    const orderData = {
+    // const orderData = {
+    //   user: user?._id,
+    //   totalPrice: total,
+    //   shippingInfo,
+    //   orderedItems: cart.map((item) => ({
+    //     productId: item._id,
+    //     name: item.name,
+    //     qty: item.qty,
+    //     price: item.price,
+    //     image: item.images[0].url,
+    //   })),
+    //   userDetails: {
+    //     user: user?._id,
+    //     name: user?.name,
+    //   },
+    //   paymentMethod: selectedPaymentMethod,
+    //   itemPrice: cart.reduce((total, item) => total + item.price * item.qty, 0),
+    // };
+    setOrderData({
       user: user?._id,
       totalPrice: total,
       shippingInfo,
@@ -90,15 +110,15 @@ function CheckoutPage() {
       },
       paymentMethod: selectedPaymentMethod,
       itemPrice: cart.reduce((total, item) => total + item.price * item.qty, 0),
-    };
+    });
 
     if (selectedPaymentMethod === "Card") {
+      localStorage.setItem("orderData", JSON.stringify({ orderData }));
       makePayment();
-      dispatch(createOrder(orderData))
     } else {
       dispatch(createOrder(orderData))
       setTimeout(() => {
-        nav("/success");
+        nav("/profile");
       }, 1500);
     }
   };

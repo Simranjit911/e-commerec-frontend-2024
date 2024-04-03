@@ -1,8 +1,20 @@
+import { useEffect } from "react";
 import { RxAvatar } from "react-icons/rx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { handleLogout } from "../../redux/userSlice";
+import { useNavigate } from "react-router-dom";
 
 function MyProfile() {
   const { user } = useSelector((state) => state.user);
+  console.log(user)
+  let nav = useNavigate();
+  let dispatch = useDispatch();
+  useEffect(() => {
+    if (user.name == ""||user=={}) {
+      console.log("cal");
+      handleLogout(dispatch, nav);
+    }
+  }, []);
 
   return (
     <div className="w-full h-full mx-auto flex flex-col items-center justify-center bg-gray-200 min-h-[500px]">

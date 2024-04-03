@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CgLogOut, CgProfile, CgShoppingCart } from "react-icons/cg";
 import { GiNotebook } from "react-icons/gi";
 import { MdDashboard, MdUpdate } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MyProfile from "../components/profile/MyProfile";
 import Orders from "../components/profile/Orders";
 import Logout from "../components/profile/Logout";
@@ -10,10 +10,18 @@ import AllOrders from "../components/order/AllOrders";
 import { FaHamburger, FaUsers } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import CartPage from "../components/CartPage";
+import { handleLogout } from "../redux/userSlice";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const { user } = useSelector((state) => state.user);
-
+  let nav = useNavigate();
+  let dispatch = useDispatch();
+  useEffect(() => {
+    if (user == {} || user == null || user == undefined) {
+      handleLogout(dispatch, nav);
+    }
+  }, []);
   const [page, setPage] = useState("profile");
   const navigation = [
     {

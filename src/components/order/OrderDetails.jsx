@@ -79,7 +79,7 @@ function OrderDetails() {
             </p>
             <p className="text-gray-700 lowercase">
               <span className="font-semibold capitalize ">Email:</span>{" "}
-              {user?.email.toLowerCase()}
+              {user?.email?.toLowerCase()}
             </p>
           </div>
           <div>

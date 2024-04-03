@@ -8,7 +8,7 @@ import { CgProfile } from "react-icons/cg";
 import { DarkModeContext } from "../context/DarkModeContext"; // Importing context for dark mode
 import { useDispatch, useSelector } from "react-redux";
 import { loadCartFromLocalStorage } from "../redux/cartSlice"; // Importing Redux action to load cart from local storage
-import { checkAuth } from "../redux/userSlice"; // Importing Redux action to check user authentication
+import { checkAuth, handleLogout } from "../redux/userSlice"; // Importing Redux action to check user authentication
 
 function Navbar() {
   let { cart } = useSelector((state) => state.cart);
@@ -22,9 +22,13 @@ function Navbar() {
 
   const [isOpen, setIsOpen] = useState(false); // State for mobile navigation menu
   const dispatch = useDispatch();
-  const { isAuthenticated, user } = useSelector((state) => state.user); // Accessing user state from Redux store
+  const { isAuthenticated, user } = useSelector((state) => state.user); 
+ 
 
   useEffect(() => {
+    if(user=={}||user==null||user==undefined){
+      handleLogout()
+    }
     loadCartFromLocalStorage(dispatch); // Load cart from local storage on component mount
     dispatch(checkAuth()); // Check user authentication on component mount
   }, [isAuthenticated, dispatch]); // Effect runs when isAuthenticated changes
@@ -144,6 +148,11 @@ function Navbar() {
               </div>
               <Link to={"/cart"} className="text-2xl">
                 <BsCart2 />
+                {cart.length >= 1 && (
+                  <span className="bg-blue-900 text-xs p-1 rounded-[100%] text-white absolute bottom-2 left-4 ">
+                    {cart.length}
+                  </span>
+                )}
               </Link>
               <Link to={"/profile"} className="text-2xl">
                 <CgProfile />

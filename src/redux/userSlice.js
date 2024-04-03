@@ -16,7 +16,7 @@ export const loginUser = createAsyncThunk("user/login", async (userData, thunkAP
         }
     } catch (error) {
         // Handle errors
-             // Show error toast notification
+        // Show error toast notification
         toast.error(error.response ? error.response.data.msg : "Login Failed");
         // Reject with value to pass error to action payload
         return thunkAPI.rejectWithValue({ error: error.message });
@@ -46,7 +46,7 @@ export const registerUser = createAsyncThunk("user/register", async (userData, t
 });
 
 export async function handleLogout(dispatch, nav) {
-
+console.log("call")
     localStorage.removeItem("token");
     localStorage.removeItem("auth");
     localStorage.removeItem("user");
@@ -75,7 +75,7 @@ const userSlice = createSlice({
         checkAuth: (state, action) => {
 
             const token = localStorage.getItem("token");
-            const userJSON = JSON.parse(localStorage.getItem("user"))
+            const userJSON = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
             const authJSON = JSON.parse(localStorage.getItem("auth"))
 
             const isAuthenticated = authJSON ? JSON.parse(authJSON) : false;
