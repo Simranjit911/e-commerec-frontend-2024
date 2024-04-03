@@ -29,7 +29,6 @@ function Reviews({ pId, productRating }) {
   useEffect(() => {
     fetchReviews();
     dispatch(getLoggedUserOrder());
-    checkOrderBeforeReview();
   }, [pId, formData.startSelected]);
 
   function checkOrderBeforeReview() {

@@ -8,7 +8,6 @@ function Product({ product }) {
   // Destructuring product object
   const { _id, category, price, desc, images, ratings, name, numOfReviews } =
     product;
-  console.log(product);
   // Options for ReactStars component
   const options = {
     edit: false,

@@ -26,11 +26,9 @@ export const createOrder = createAsyncThunk('order/new', async (data, nav, thunk
 // Async thunk action to get logged in user's orders
 export const getLoggedUserOrder = createAsyncThunk('/order/my', async (data, thunkAPI) => {
     try {
-        console.log("call")
         // Make a GET request to fetch logged in user's orders
         const res = await axios.get("/order/me");
         // Log the response data
-        console.log(res.data);
         return res.data
     } catch (error) {
         // Log any errors
@@ -45,7 +43,6 @@ export const getSingleOrder = createAsyncThunk('/order/one', async (id, thunkAPI
         // Make a GET request to fetch a single order by ID
         const res = await axios.get(`/order/one/${id}`);
         // Log the response data
-        console.log(res.data);
         return res.data
     } catch (error) {
         // Log any errors
@@ -58,10 +55,8 @@ export const getSingleOrder = createAsyncThunk('/order/one', async (id, thunkAPI
 export const getAllOrders = createAsyncThunk('admin/orders/all', async (_, thunkAPI) => {
     try {
         // Make a GET request to fetch all orders for admin
-        console.log("call")
         const res = await axios.get("/order/all");
         // Log the response data
-        console.log(res.data);
         return res.data
     } catch (error) {
         // Log any errors
