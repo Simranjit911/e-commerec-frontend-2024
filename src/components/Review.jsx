@@ -28,7 +28,7 @@ function Review({ review }) {
           </div>
         </div>
         <div className="flex gap-2">
-          <span className="">{review.reviewTime}</span>
+          <span className="">{new Date(review.reviewTime).toLocaleString('en-US')}</span>
           {/* {user._id == review.user && (
             <button>
               <RxPencil1 />

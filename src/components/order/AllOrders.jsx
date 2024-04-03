@@ -14,6 +14,7 @@ const OrderDetails = ({ order }) => {
     paymentMethod,
     shippingInfo,
     totalPrice,
+    createdAt,
   } = order;
 
   return (
@@ -24,7 +25,8 @@ const OrderDetails = ({ order }) => {
           Order No. #{_id.substring(0, 9)}
         </h2>
         <p className="text-gray-700 ">
-          <span className="font-semibold">Ordered at:</span> {orderedTime}
+          <span className="font-semibold">Order Time:</span>{" "}
+          {new Date(createdAt).toLocaleString("en-US")}
         </p>
         <p className="text-gray-700">
           <span className="font-semibold">Status:</span> {orderStatus}
@@ -40,7 +42,9 @@ const OrderDetails = ({ order }) => {
       </div>
       {/* Right section containing ordered items */}
       <div className="flex flex-col gap-2 w-full md:w-1/2">
-        <h3 className="text-xl font-medium">Items Ordered</h3>
+        <h3 className="text-md px-2 shadow-xl  font-medium bg-blue-500 w-fit text-white rounded-md">
+          Items Ordered
+        </h3>
         {/* Mapping over ordered items */}
         {orderedItems?.map((item) => (
           <div key={item._id} className="flex items-center gap-4">
@@ -105,7 +109,7 @@ const AllOrders = () => {
           <OrderDetails key={order._id} order={order} />
         ))
       ) : (
-        <div className="text-center">You Have Not Ordered anyrhing yet</div>
+        <div className="text-center">You Have Not Ordered anything yet</div>
       )}
     </div>
   );

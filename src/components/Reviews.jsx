@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 
 function Reviews({ pId, productRating }) {
   const dispatch = useDispatch();
+  console.log(productRating);
   const [formData, setFormData] = useState({
     rating: 5,
     comment: "",
@@ -28,6 +29,7 @@ function Reviews({ pId, productRating }) {
   useEffect(() => {
     fetchReviews();
     dispatch(getLoggedUserOrder());
+    checkOrderBeforeReview();
   }, [pId, formData.startSelected]);
 
   function checkOrderBeforeReview() {
@@ -90,7 +92,7 @@ function Reviews({ pId, productRating }) {
       setTimeout(() => {
         // fetchReviews();
         dispatch(fetchSingleProduct(pId));
-      }, 300);
+      }, 800);
     } catch (error) {
       setError(error.message);
     }
@@ -136,7 +138,7 @@ function Reviews({ pId, productRating }) {
           >
             <div className="flex flex-col w-full gap-4 justify-center text-center items-center">
               <label className="text-xl font-normal text-center py-1">
-                Add Product Review
+                Write Product Review
                 <ReactStars
                   count={5}
                   onChange={(newRating) => {
@@ -185,7 +187,7 @@ function Reviews({ pId, productRating }) {
 
         {reviews.length > 0 ? (
           <div className="md:w-[50%] flex justify-center items-center flex-wrap gap-6 my-6 overflow-x-auto md:px-4 py-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-            <div className="flex items-center text-xl font-semibold  gap-2">
+           {productRating!=0 && <div className="flex items-center text-xl font-semibold  gap-2">
               <p className="md:text-xl font-semibold">Overall Rating:</p>
               <ReactStars
                 count={5}
@@ -196,7 +198,7 @@ function Reviews({ pId, productRating }) {
                 // You can use className or classNames
               />
               ({productRating.toFixed(1)})
-            </div>
+            </div>}
             {reviews.map((review, index) => (
               <Review key={index} review={review} />
             ))}

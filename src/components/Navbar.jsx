@@ -46,7 +46,7 @@ function Navbar() {
           },
         ]
       : []),
-  ]; 
+  ];
 
   return (
     <nav className="bg-blue-500 text-white px-2 py-3  text-xl items-center dark:bg-slate-950 shadow-2xl transition-all duration-500 ease-out">
@@ -67,19 +67,23 @@ function Navbar() {
         </div>
         {/* mobile navigation */}
         {isOpen && (
-          <div className="md:hidden flex absolute flex-col top-10 bg-blue-500 w-full py-4 text-left z-50 shadow-xl transition-all duration-1000 ease-out">
+          <div className="md:hidden flex absolute flex-col top-10 bg-blue-500 w-full py-4 text-left z-50 shadow-xl transition-all duration-500 ease-out">
             {links.map((ele, i) => (
-              <Link className="mx-2 text-md" key={i} to={ele.to}>
+              <Link
+                className="mx-2 text-left ml-[10%] text-md"
+                key={i}
+                to={ele.to}
+              >
                 {ele.text}
               </Link>
             ))}
           </div>
         )}
         {/* side icons for pc and mobile */}
-        <div className="flex gap-1 md:gap-3 md:text-2xl items-center justify-end text-xl">
+        <div className="flex gap-2 md:gap-3 md:text-2xl items-center justify-end text-xl">
           {isAuthenticated ? (
             <>
-              <div className="flex justify-end  items-center ">
+              <div className="hidden md:flex justify-end  items-center ">
                 <input
                   name="name"
                   value={filters.name}
@@ -121,12 +125,11 @@ function Navbar() {
           ) : (
             // not authenticated 4 pc and mobile
             <>
-              <div className="flex w-full justify-end  items-center ">
+              <div className="hidden md:flex w-full justify-end  items-center ">
                 <input
                   name="name"
                   type="search"
                   value={filters.name}
-
                   placeholder="Search Product"
                   className="text-sm md:text-md md:py-1 outline-none focus:outline focus:outline-blue-600 text-black px-1 md:w-[90%] w-[70%]"
                   onChange={handleFilterChange} // Handling change in search input
@@ -146,7 +149,7 @@ function Navbar() {
                 <CgProfile />
               </Link>
               <button
-                className="md:hidden text-2xl transition-all duration-500 ease-linear"
+                className="md:hidden text-2xl  transition-all duration-500 ease-out"
                 onClick={() => setIsOpen((prev) => !prev)}
               >
                 {isOpen ? <AiOutlineClose /> : <RiMenu4Fill />}

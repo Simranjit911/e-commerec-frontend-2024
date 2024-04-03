@@ -11,6 +11,8 @@ function OrderDetails() {
   const { order: od, isLoading, isError } = singleOrder;
   const order = od ? od.order : null; // Add null check here
   let nav = useNavigate();
+  const { user } = useSelector((state) => state.user);
+
   useEffect(() => {
     dispatch(getSingleOrder(id));
   }, [dispatch, id]);
@@ -35,8 +37,9 @@ function OrderDetails() {
     paymentMethod,
     isPaid,
     totalPrice,
+    createdAt,
   } = order;
-  console.log(orderedItems);
+  console.log(order);
   // Define order stages
   const orderStages = ["Not Processed", "Packed", "Shipped", "Delivered"];
   const orderTrackingStages = [
@@ -53,7 +56,11 @@ function OrderDetails() {
   return (
     <div className="md:px-[20%] px-[10%] bg-gray-100 mx-auto p-4 rounded-lg shadow-lg">
       <h1 className="text-3xl font-bold mb-6  text-gray-800">
-        Order Details (Order ID: #{id.substring(0, 7)})
+        Order Details{" "}
+        <span className="text-green-700">
+          {" "}
+          (Order No. #{id.substring(0, 7)})
+        </span>
       </h1>
       {/* Order Overview */}
       <div className="bg-blue-200 rounded-lg shadow-md p-4 capitalize mb-6">
@@ -68,7 +75,11 @@ function OrderDetails() {
               {shippingInfo.pinCode} {shippingInfo.country}
             </p>
             <p className="text-gray-700">
-              <span className="font-semibold">Customer Name:</span> {name}
+              <span className="font-semibold">Name:</span> {name}
+            </p>
+            <p className="text-gray-700 lowercase">
+              <span className="font-semibold capitalize ">Email:</span>{" "}
+              {user?.email.toLowerCase()}
             </p>
           </div>
           <div>
@@ -79,7 +90,8 @@ function OrderDetails() {
               <span className="font-semibold">Order Status:</span> {orderStatus}
             </p>
             <p className="text-gray-700">
-              <span className="font-semibold">Order Time:</span> {orderedTime}
+              <span className="font-semibold">Order Time:</span>{" "}
+              {new Date(createdAt).toLocaleString("en-US")}
             </p>
             <p className="text-gray-700">
               <span className="font-semibold">Payment Method:</span>{" "}

@@ -44,7 +44,7 @@ function User() {
                   <td className="border-1  mx-auto py-0.5  ">
                     <img
                       className="w[10%] mx-auto rounded-xl h-14"
-                      src={user?.avatar?.url}
+                      src={user?.avatar?.url || "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?size=626&ext=jpg"}
                       alt={user.name}
                     />
                   </td>

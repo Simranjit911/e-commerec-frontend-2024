@@ -21,7 +21,7 @@ function Product({ product }) {
   return (
     <Link
       to={`/product/${_id}`}
-      className="group relative bg-sky-100  rounded-lg shadow-xl shadow-slate-300 border border-slate-400 overflow-hidden transform hover:scale-105 transition duration-300 h-[250px] md:h-[384px] ease-in-out flex flex-col justify-between max-w-[200px] md:min-w-[300px]  p-4 pb-0"
+      className="group relative bg-sky-100  rounded-lg shadow-xl shadow-slate-300 border border-slate-400 overflow-hidden transform hover:scale-105 transition duration-300 h-[250px] md:h-[384px] ease-in-out flex flex-col justify-between max-w-[230px]   md:min-w-[300px]  p-4 pb-0"
     >
       {/* Product image */}
       <div className="group-hover:opacity-75 overflow-hidden md:h-[70%]">
@@ -36,7 +36,7 @@ function Product({ product }) {
       <div className="mt-3 flex flex-col gap-0.5 md:gap-1 md:h-[30%] py-1 md:p-0">
         <div className="flex justify-between items-center">
           <p className="text-sm text-gray-500 uppercase">{category}</p>
-          <span className="flex items-center text-sm">
+          <span className="flex items-center text-xs md:text-sm">
             <ReactStars {...options} />
             <p className="text-xs text-gray-500 ml-1">
               ({numOfReviews ? numOfReviews : 0})
@@ -44,16 +44,18 @@ function Product({ product }) {
           </span>
         </div>
         <p className="text-lg font-normal capitalize text-left text-black md:hidden">
-          {name.length >= 16 ? `${name.slice(0, 16)}...` : name}
+          {name.length >= 14 ? `${name.slice(0, 13)}..` : name}
         </p>
         <p className="text-lg hidden font-normal capitalize text-left text-black md:block">
-          { name}
+          {name.length >= 25 ? `${name.slice(0, 25)}..` : name}
         </p>
         <div className="flex justify-between items-center">
-          <p className="text-lg font-semibold text-blue-700">₹{price}</p>
+          <p className="md:text-lg  font-semibold text-blue-700">₹{price}</p>
           {/* Add to Cart button (uncomment and customize) */}
           <Button
-            classes={"bg-blue-700 text-white hover:bg-blue-800"}
+            classes={
+              "bg-blue-700 text-md md:text-lg text-white hover:bg-blue-800"
+            }
             text={"Buy Now"}
             icon={<MdShoppingCartCheckout />}
           />

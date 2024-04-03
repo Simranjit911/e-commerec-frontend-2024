@@ -89,7 +89,11 @@ function AllProducts() {
             <BsFilter />
             Filters{" "}
             <span className="bg-blue-800 text-xs p-1 rounded-[100%] text-white shadow-xl absolute bottom-6 left-16 ">
-            {filters.name !== "" || filters.category !== "" || filters.rating !== "" ? <MdNotificationsActive /> : null}
+              {filters.name !== "" ||
+              filters.category !== "" ||
+              filters.rating !== "" ? (
+                <MdNotificationsActive />
+              ) : null}
             </span>
           </button>
           {/* Search  */}
@@ -249,7 +253,7 @@ function AllProducts() {
             </div>
 
             {/* Example: map through products and display them */}
-            <div className="flex flex-wrap gap-5 justify-center items-center">
+            <div className="flex flex-wrap gap-2 py-4 min-h-[500px] md:gap-6 justify-center items-center">
               {products?.products?.map((p, i) => (
                 <Product product={p} key={i} />
               ))}
