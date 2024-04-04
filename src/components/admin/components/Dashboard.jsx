@@ -5,6 +5,7 @@ import User from "./User";
 import { fetchProductswithQuery } from "../../../redux/productSlice";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { getAllOrders } from "../../../redux/orderSlice";
+import Loader from "../../Loader";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -18,16 +19,16 @@ function Dashboard() {
   useEffect(() => {
     dispatch(fetchAllUsers());
     dispatch(getAllOrders());
-    dispatch(fetchProductswithQuery())
+    dispatch(fetchProductswithQuery());
   }, [dispatch]);
 
   useEffect(() => {
     setInStockCount(products?.totalProducts - products?.outOfStockCount);
-    setOutOfStockCount(products?.outOfStockCount)
+    setOutOfStockCount(products?.outOfStockCount);
     setOrderStatus(allOrders?.order?.orderStatusCounts);
   }, [products?.totalProducts, outOfStockCount]);
 
- console.log(products)
+
 
   const orderData = [
     {
@@ -48,10 +49,10 @@ function Dashboard() {
       value: orderStatus?.find((ele) => ele._id === "shipped")?.count || 0,
     },
   ];
-  console.log(orderData);
+
   const productAvailabilityData = [
     { name: "In Stock", value: inStockCount },
-    { name: "Out of Stock", value:outOfStockCount  },
+    { name: "Out of Stock", value: outOfStockCount },
   ];
 
   const colors = ["#3182CE", "#A0AEC0", "#FC8181", "#68D391"];
@@ -78,7 +79,7 @@ function Dashboard() {
           <p className="text-3xl font-bold">{allOrders?.order?.total || 0}</p>
         </div>
       </div>
-      
+
       <div className="duration-500 transition-all flex w-full gap-10 justify-center items-center flex-col lg:flex-row my-5">
         {/* Products Availability section */}
         <div className="w-full max-w-lg px-6">
@@ -96,7 +97,7 @@ function Dashboard() {
                 outerRadius={window.innerWidth > 768 ? 160 : 80}
                 label
               >
-                {productAvailabilityData.map((entry, index) => (
+                {productAvailabilityData?.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={colors[index % colors.length]}
@@ -117,46 +118,50 @@ function Dashboard() {
         </div>
 
         {/* Orders Status section */}
-        <div className="w-full max-w-lg px-6">
-          <h2 className="text-2xl font-semibold mb-4 text-center py-2 bg-blue-600 rounded-lg">
-            Orders Status
-          </h2>
-          <ResponsiveContainer width="100%" height={400}>
-            <PieChart>
-              <Pie
-                data={orderData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={window.innerWidth > 768 ? 160 : 80}
-                label
-              >
-                {orderData.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={colors2[index % colors.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-          <div className="w-full mx-auto flex justify-center items-center gap-5">
-            <p className="bg-[#68D391] px-1 py-0.5 rounded text-black text-md">
-              Not Processed: {orderData[0].value}
-            </p>
-            <p className="bg-[#FC8181] px-1 py-0.5 rounded text-black text-md">
-              Packed: {orderData[1].value}
-            </p>
-            <p className="bg-[#A0AEC0] px-1 py-0.5 rounded text-black text-md">
-              Delivered: {orderData[2].value}
-            </p>
-            <p className="bg-[#3182CE] px-1 py-0.5 rounded text-black text-md">
-              Shipped: {orderData[3].value}
-            </p>
+        {allOrders?.order?.msg != "All orders found!" ? (
+          <Loader span={"Loading Orders"} />
+        ) : (
+          <div className="w-full max-w-lg px-6">
+            <h2 className="text-2xl font-semibold mb-4 text-center py-2 bg-blue-600 rounded-lg">
+              Orders Status
+            </h2>
+            <ResponsiveContainer width="100%" height={400}>
+              <PieChart>
+                <Pie
+                  data={orderData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={window.innerWidth > 768 ? 160 : 80}
+                  label
+                >
+                  {orderData?.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={colors2[index % colors.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="w-full mx-auto flex justify-center items-center gap-5">
+              <p className="bg-[#68D391] px-1 py-0.5 rounded text-black text-md">
+                Not Processed: {orderData[0].value}
+              </p>
+              <p className="bg-[#FC8181] px-1 py-0.5 rounded text-black text-md">
+                Packed: {orderData[1].value}
+              </p>
+              <p className="bg-[#A0AEC0] px-1 py-0.5 rounded text-black text-md">
+                Delivered: {orderData[2].value}
+              </p>
+              <p className="bg-[#3182CE] px-1 py-0.5 rounded text-black text-md">
+                Shipped: {orderData[3].value}
+              </p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
       {/* users */}
       <div

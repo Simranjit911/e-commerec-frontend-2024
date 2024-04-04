@@ -289,7 +289,7 @@ function AllProducts() {
       {/* Pagination */}
       {!isLoading && !isError && products?.products?.length > 0 && (
         <div className="mt-4 flex justify-center items-center mx-auto my-6">
-          {pageNumbers.map((pageNumber) => (
+          {pageNumbers?.map((pageNumber) => (
             <button
               key={pageNumber}
               onClick={() => handlePageChange(pageNumber)}

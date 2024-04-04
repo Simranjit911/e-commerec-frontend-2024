@@ -70,7 +70,7 @@ function Profile() {
           <RxHamburgerMenu />
         </button>
         <nav className="flex flex-col mt-8 gap-4 px-0.5 transition-all duration-500 ease-in-out capitalize">
-          {navigation.map((e, i) => (
+          {navigation?.map((e, i) => (
             <p
               key={i}
               className={`
@@ -93,7 +93,7 @@ function Profile() {
       </section>
       {/* Main */}
       <main className="w-full">
-        {navigation.map((navItem, index) => (
+        {navigation?.map((navItem, index) => (
           <React.Fragment key={index}>
             {page === navItem.name && navItem.component}
           </React.Fragment>

@@ -31,7 +31,7 @@ function Services() {
 
   return (
     <div className=" mt-7 services-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 p-4 rounded-md shadow-md bg-sky-200">
-      {servicesData.map((service, index) => (
+      {servicesData?.map((service, index) => (
         <div
           key={index}
           className="service-card flex flex-col items-center justify-center p-3 hover:scale-105 duration-150 rounded-md hover:bg-sky-300 cursor-pointer border border-sky-400"

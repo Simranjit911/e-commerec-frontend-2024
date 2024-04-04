@@ -14,7 +14,7 @@ function Orders() {
     dispatch(updateOrder({ orderId, status }));
     setTimeout(() => {
       dispatch(getAllOrders());
-    }, 500);
+    }, 1200);
   };
   useEffect(() => {
     dispatch(getAllOrders());

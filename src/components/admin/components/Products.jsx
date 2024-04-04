@@ -48,7 +48,7 @@ function Products() {
   }
   useEffect(() => {
     dispatch(fetchProductswithQuery(new URLSearchParams(filter)));
-  }, [filter, dispatch]);
+  }, [filter]);
 
   const totalProducts = products?.totalProducts;
 

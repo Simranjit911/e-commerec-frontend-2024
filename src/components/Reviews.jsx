@@ -35,11 +35,11 @@ function Reviews({ pId, productRating }) {
       return false;
     } else {
       let { order: orders } = order;
-      let orderedProd = orders.map((i) => i.orderedItems);
+      let orderedProd = orders?.map((i) => i.orderedItems);
       orderedProd = orderedProd.flat(3);
-      console.log(orderedProd);
+
       let findOrder=false;
-      console.log(pId);
+   
       orderedProd?.map((i) => {
         if(i.productId==pId){
           findOrder=true
@@ -64,7 +64,7 @@ function Reviews({ pId, productRating }) {
     e.preventDefault();
     try {
       let res = checkOrderBeforeReview();
-      console.log(res);
+
       if (!startSelected) {
         return toast.error("Select Rating");
       }
@@ -199,7 +199,7 @@ function Reviews({ pId, productRating }) {
                 ({productRating.toFixed(1)})
               </div>
             )}
-            {reviews.map((review, index) => (
+            {reviews?.map((review, index) => (
               <Review key={index} review={review} />
             ))}
           </div>

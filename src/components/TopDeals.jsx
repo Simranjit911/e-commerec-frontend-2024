@@ -70,7 +70,7 @@ function TopDeals() {
         pauseOnHover={true}
         speed={200}
       >
-        {products.map((product, index) => (
+        {products?.map((product, index) => (
           <Card key={index} product={product} />
         ))}
       </Marquee>

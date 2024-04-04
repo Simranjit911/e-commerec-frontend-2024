@@ -79,7 +79,7 @@ function AdminPanel() {
           <RxHamburgerMenu />
         </button>
         <nav className="flex flex-col mt-8 gap-4 px-0.5 transition-all duration-500 ease-in-out">
-          {navigation.map((navItem, index) => (
+          {navigation?.map((navItem, index) => (
             <button
               key={index}
               className={`
@@ -103,7 +103,7 @@ function AdminPanel() {
 
       {/* Main Content */}
       <main className="w-full  min-h-[600px]   ">
-        {navigation.map((navItem) => (
+        {navigation?.map((navItem) => (
           <React.Fragment key={navItem.name}>
             {page === navItem.name && navItem.component}
           </React.Fragment>

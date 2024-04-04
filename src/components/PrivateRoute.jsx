@@ -10,7 +10,6 @@ function PrivateRoute() {
   let dispatch = useDispatch();
   useEffect(() => {
     if (user.name == "") {
-      console.log("cal");
       handleLogout(dispatch, nav);
     }
   }, []);

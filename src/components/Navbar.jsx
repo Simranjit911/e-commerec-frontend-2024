@@ -22,12 +22,11 @@ function Navbar() {
 
   const [isOpen, setIsOpen] = useState(false); // State for mobile navigation menu
   const dispatch = useDispatch();
-  const { isAuthenticated, user } = useSelector((state) => state.user); 
- 
+  const { isAuthenticated, user } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if(user=={}||user==null||user==undefined){
-      handleLogout()
+    if (user == {} || user == null || user == undefined) {
+      handleLogout();
     }
     loadCartFromLocalStorage(dispatch); // Load cart from local storage on component mount
     dispatch(checkAuth()); // Check user authentication on component mount
@@ -146,11 +145,14 @@ function Navbar() {
                   <BsSearch />
                 </button>
               </div>
-              <Link to={"/cart"} className="text-2xl">
+              <Link
+                to={"/cart"}
+                className="text-xl flex items-center relative mx-1"
+              >
                 <BsCart2 />
-                {cart.length >= 1 && (
-                  <span className="bg-blue-900 text-xs p-1 rounded-[100%] text-white absolute bottom-2 left-4 ">
-                    {cart.length}
+                {cart.length > 0 && (
+                  <span className="bg-blue-900 text-xs p-1 rounded-[100%] text-white absolute bottom-2 left-4  ">
+                    {cart?.length}
                   </span>
                 )}
               </Link>
