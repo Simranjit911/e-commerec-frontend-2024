@@ -10,31 +10,27 @@ import { createOrder, getLoggedUserOrder } from "../redux/orderSlice";
 
 function SuccessPage() {
   const dispatch = useDispatch();
-  let { orderData:od } = useContext(DarkModeContext);
-  // const { productOrderData, setProductOrderData } = useContext(DarkModeContext);
-  // console.log(productOrderData);
-
-  // useEffect(() => {
-  //   // Check if productOrderData exists before dispatching
-  //   if (productOrderData) {
-  //     dispatch(createOrder(productOrderData));
-  //   }
-  // }, []); // Empty dependency array ensures useEffect runs only once
+  let { orderData: od } = useContext(DarkModeContext);
   useEffect(() => {
     let order = {};
     const orderData = localStorage.getItem("orderData");
     order = orderData ? JSON.parse(orderData) : {};
-    if (order.orderData != null || order.orderData!=undefined) {
-      if(od!=null){
-        dispatch(createOrder(od));
-      }else{
-        dispatch(createOrder(order.orderData));
-      }
+    if (order?.orderedItems?.length >= 1) {
+      dispatch(createOrder(order));
       localStorage.removeItem("cart");
       localStorage.removeItem("orderData");
       saveCartToLocalStorage([]);
       loadCartFromLocalStorage(dispatch);
-      dispatch(getLoggedUserOrder())
+      dispatch(getLoggedUserOrder());
+    } else {
+      // let order = {};
+      // const orderData = localStorage.getItem("orderData");
+      // order = orderData.orderData ? JSON.parse(orderData) : {};
+      // console.log(order);
+      // if (order != null || order != undefined) {
+      //   console.log("2");
+      //   // dispatch(createOrder(order.orderData));
+      // }
     }
   }, []);
 

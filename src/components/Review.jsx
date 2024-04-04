@@ -28,7 +28,9 @@ function Review({ review }) {
           </div>
         </div>
         <div className="flex gap-2">
-          <span className="">{new Date(review.reviewTime).toLocaleString('en-US')}</span>
+          <span className="">
+            {new Date(review.reviewTime).toLocaleString("en-US")}
+          </span>
           {/* {user._id == review.user && (
             <button>
               <RxPencil1 />
@@ -45,7 +47,7 @@ function Review({ review }) {
                 dispatch(deleteReview(data));
                 setTimeout(() => {
                   dispatch(fetchSingleProduct(id));
-                }, 300);
+                }, 1000);
               }}
             >
               <RiDeleteBin7Fill />

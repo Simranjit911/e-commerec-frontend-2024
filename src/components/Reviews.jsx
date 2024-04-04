@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 
 function Reviews({ pId, productRating }) {
   const dispatch = useDispatch();
-  console.log(productRating);
   const [formData, setFormData] = useState({
     rating: 5,
     comment: "",
@@ -37,13 +36,13 @@ function Reviews({ pId, productRating }) {
     } else {
       let { order: orders } = order;
       let orderedProd = orders.map((i) => i.orderedItems);
-
-      let findOrder;
-      orderedProd[0].map((i) => {
-        if (i.productId == pId) {
-          findOrder = true;
-        } else {
-          findOrder = false;
+      orderedProd = orderedProd.flat(3);
+      console.log(orderedProd);
+      let findOrder=false;
+      console.log(pId);
+      orderedProd?.map((i) => {
+        if(i.productId==pId){
+          findOrder=true
         }
       });
       return findOrder;
@@ -76,9 +75,9 @@ function Reviews({ pId, productRating }) {
         return toast.error("Describe comment in 50 words");
       }
       if (!checkOrderBeforeReview()) {
+        console.log(checkOrderBeforeReview());
         return toast.error("You must order the product before adding a review");
       }
-      console.log(res);
       const data = { rating, comment, description, productId: pId };
       dispatch(addProductReview(data));
 
@@ -91,7 +90,7 @@ function Reviews({ pId, productRating }) {
       setTimeout(() => {
         // fetchReviews();
         dispatch(fetchSingleProduct(pId));
-      }, 800);
+      }, 1200);
     } catch (error) {
       setError(error.message);
     }
@@ -186,18 +185,20 @@ function Reviews({ pId, productRating }) {
 
         {reviews.length > 0 ? (
           <div className="md:w-[50%] flex justify-center items-center flex-wrap gap-6 my-6 overflow-x-auto md:px-4 py-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-           {productRating!=0 && <div className="flex items-center text-xl font-semibold  gap-2">
-              <p className="md:text-xl font-semibold">Overall Rating:</p>
-              <ReactStars
-                count={5}
-                value={Number(productRating.toFixed(2))} // You should replace this with your actual product rating value
-                size={25}
-                edit={false} // Disable editing of the rating
-                activeColor="salmon" // Change the color of the stars
-                // You can use className or classNames
-              />
-              ({productRating.toFixed(1)})
-            </div>}
+            {productRating != 0 && (
+              <div className="flex items-center text-xl font-semibold  gap-2">
+                <p className="md:text-xl font-semibold">Overall Rating:</p>
+                <ReactStars
+                  count={5}
+                  value={Number(productRating.toFixed(2))} // You should replace this with your actual product rating value
+                  size={25}
+                  edit={false} // Disable editing of the rating
+                  activeColor="salmon" // Change the color of the stars
+                  // You can use className or classNames
+                />
+                ({productRating.toFixed(1)})
+              </div>
+            )}
             {reviews.map((review, index) => (
               <Review key={index} review={review} />
             ))}

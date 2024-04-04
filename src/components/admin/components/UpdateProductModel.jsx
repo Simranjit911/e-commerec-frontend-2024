@@ -10,7 +10,7 @@ import { CgClose } from "react-icons/cg";
 import Loader from "../../Loader";
 
 function UpdateProductModel({ fn, id }) {
-  console.log("id", id);
+  
   const dispatch = useDispatch();
 
   const { singleProduct, isError, isLoading } = useSelector(
@@ -56,7 +56,7 @@ function UpdateProductModel({ fn, id }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputVal);
+    
     inputVal.images[0].url = inputVal.imgUrl; // Set the url of the image object
 
     dispatch(updateProduct({ id, data: inputVal }));

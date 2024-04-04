@@ -10,6 +10,7 @@ import Reviews from "../components/Reviews";
 import { addToCart } from "../redux/cartSlice";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { MdNavigateNext } from "react-icons/md";
+import RelatedProducts from "../components/RelatedProducts";
 
 function ProductDetails() {
   let { id } = useParams();
@@ -40,6 +41,7 @@ function ProductDetails() {
         </div>
       ) : (
         <>
+          {/* Top Arrow */}
           <div className=" flex text-black items-center capitalize  px-8 py-4">
             <p
               onClick={() => history(-1)}
@@ -53,6 +55,7 @@ function ProductDetails() {
               {product?.name}
             </span>
           </div>
+          {/* main div */}
           <div className="flex flex-col md:flex-row justify-center items-center md:items-start px-8 py-4 bg-blue-100 rounded-lg shadow-lg">
             {/* Product image */}
             <div className="md:w-[40%] px-4 my-auto">
@@ -60,7 +63,7 @@ function ProductDetails() {
                 <img
                   src={product?.images?.[0]?.url}
                   alt=""
-                  className="w-full md:max-w-sm mx-auto rounded-lg shadow-sm object-contain md:float-right md:h-full drop-shadow-xl"
+                  className="w-full md:max-w-sm mx-auto rounded-lg shadow-sm object-cover md:float-right md:h-full drop-shadow-xl"
                 />
               )}
             </div>
@@ -88,7 +91,7 @@ function ProductDetails() {
                   ₹{product?.price}
                 </p>
                 <p className="text-lg line-through text-slate-600 ml-2">
-                  ₹{(product?.price * 1.5).toFixed(2)}
+                  ₹{(product?.price * 1.25).toFixed(2)}
                 </p>
               </div>
               {/* Stock status */}
@@ -115,6 +118,10 @@ function ProductDetails() {
                 />
               </div>
             </div>
+          </div>
+          {/* Related Products */}
+          <div className="">
+            <RelatedProducts category={product?.category} id={id} />
           </div>
           {/* Reviews */}
           <div className="mx-auto my-8 px-8">

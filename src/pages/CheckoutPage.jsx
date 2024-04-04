@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { createOrder } from "../redux/orderSlice";
@@ -34,27 +34,76 @@ function CheckoutPage() {
   }
 
   const [shippingInfo, setShippingInfo] = useState({
-    address: "",
-    city: "",
-    state: "",
-    country: "",
-    pinCode: "",
-    phoneNo: "",
+    address: "1",
+    city: "1",
+    state: "1",
+    country: "1",
+    pinCode: "1",
+    phoneNo: "1111111111",
   });
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
-
-  // Function to handle payment method selection
-  const handlePaymentMethodSelection = (method) => {
-    setSelectedPaymentMethod(method);
-  };
   // Calculate subtotal
   const subtotal = cart.reduce(
     (total, item) => total + item.price * item.qty,
     0
   );
-
   const total = subtotal;
+  const handlePaymentMethodSelection = (method) => {
+    if (method === "Card") {
+      setSelectedPaymentMethod("Card");
+      setOrderData({
+        user: user?._id,
+        totalPrice: total,
+        shippingInfo,
+        orderedItems: cart.map((item) => ({
+          productId: item._id,
+          name: item.name,
+          qty: item.qty,
+          price: item.price,
+          image: item.images[0].url,
+        })),
+        userDetails: {
+          user: user?._id,
+          name: user?.name,
+        },
+        paymentMethod: method,
+        itemPrice: cart.reduce(
+          (total, item) => total + item.price * item.qty,
+          0
+        ),
+      });
+    
+    }
+    if (method === "Cash on delivery") {
+      setSelectedPaymentMethod("Cash on delivery");
+      // setOrderData({ ...orderData, paymentMethod: "Cash on Delivery" });
+      setOrderData({
+        user: user?._id,
+        totalPrice: total,
+        shippingInfo,
+        orderedItems: cart.map((item) => ({
+          productId: item._id,
+          name: item.name,
+          qty: item.qty,
+          price: item.price,
+          image: item.images[0].url,
+        })),
+        userDetails: {
+          user: user?._id,
+          name: user?.name,
+        },
+        paymentMethod: method,
+        itemPrice: cart.reduce(
+          (total, item) => total + item.price * item.qty,
+          0
+        ),
+      });
+    }
+  };
 
+  function saveData(od) {
+    localStorage.setItem("orderData", JSON.stringify(od));
+  }
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     if (
@@ -75,25 +124,7 @@ function CheckoutPage() {
     }
 
     // Create order object
-    // const orderData = {
-    //   user: user?._id,
-    //   totalPrice: total,
-    //   shippingInfo,
-    //   orderedItems: cart.map((item) => ({
-    //     productId: item._id,
-    //     name: item.name,
-    //     qty: item.qty,
-    //     price: item.price,
-    //     image: item.images[0].url,
-    //   })),
-    //   userDetails: {
-    //     user: user?._id,
-    //     name: user?.name,
-    //   },
-    //   paymentMethod: selectedPaymentMethod,
-    //   itemPrice: cart.reduce((total, item) => total + item.price * item.qty, 0),
-    // };
-    setOrderData({
+    const newOrderData = {
       user: user?._id,
       totalPrice: total,
       shippingInfo,
@@ -108,17 +139,25 @@ function CheckoutPage() {
         user: user?._id,
         name: user?.name,
       },
-      paymentMethod: selectedPaymentMethod,
+      // paymentMethod: selectedPaymentMethod,
       itemPrice: cart.reduce((total, item) => total + item.price * item.qty, 0),
-    });
+    };
 
-    if (selectedPaymentMethod === "Card") {
-      localStorage.setItem("orderData", JSON.stringify({ orderData }));
+    setOrderData(newOrderData);
+    saveData(orderData);
+    if (
+      orderData.paymentMethod != "Cash on delivery" &&
+      orderData.paymentMethod != "Card"
+    ) {
+      return toast.error("Please select a payment method");
+    }
+    if (orderData.paymentMethod == "Card") {
+      toast.loading("Loading....", { duration: 1000 });
       makePayment();
     } else {
-      dispatch(createOrder(orderData))
+      // dispatch(createOrder(orderData))
       setTimeout(() => {
-        nav("/profile");
+        nav("/success");
       }, 1500);
     }
   };
@@ -221,22 +260,28 @@ function CheckoutPage() {
           <p className="text-lg font-semibold mb-2">Payment Method</p>
           {/* Add buttons for payment methods */}
           <button
-            onClick={() => handlePaymentMethodSelection("Cash on delivery")}
+            onClick={() => {
+              // setSelectedPaymentMethod("Cash on delivery");
+              handlePaymentMethodSelection("Cash on delivery");
+            }}
             className={`mr-4 ${
               selectedPaymentMethod === "Cash on delivery"
-                ? "bg-blue-900"
-                : "bg-blue-400"
-            } px-2 py-2 bg-blue-400 text-white hover:scale-105 duration-150 shadow-xl w-fit `}
+                ? "bg-blue-800"
+                : "bg-blue-300"
+            } px-2 py-2 bg-blue-500 text-white hover:scale-110 duration-150 shadow-xl w-fit `}
             type="button"
           >
             Cash on Delivery
           </button>
           <button
             type="button"
-            onClick={() => handlePaymentMethodSelection("Card")}
+            onClick={() => {
+              // setSelectedPaymentMethod("Card");
+              handlePaymentMethodSelection("Card");
+            }}
             className={`${
-              selectedPaymentMethod === "Card" ? "bg-blue-900" : "bg-blue-400"
-            } px-2 py-2 bg-blue-400 text-white hover:scale-105 duration-150 shadow-xl w-fit`}
+              selectedPaymentMethod === "Card" ? "bg-blue-800" : "bg-blue-300"
+            } px-2 py-2 bg-blue-500 text-white hover:scale-110 duration-150 shadow-xl w-fit`}
           >
             Card
           </button>

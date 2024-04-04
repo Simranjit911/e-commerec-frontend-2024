@@ -33,7 +33,7 @@ const cartSlice = createSlice({
             saveCartToLocalStorage(state.cart);
         },
         loadCart: (state, action) => {
-            console.log("cart", action.payload)
+       
             state.cart = action.payload;
         },
         deleteFromCart: (state, action) => {

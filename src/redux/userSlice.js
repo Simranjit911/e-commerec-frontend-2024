@@ -50,6 +50,7 @@ console.log("call")
     localStorage.removeItem("token");
     localStorage.removeItem("auth");
     localStorage.removeItem("user");
+    localStorage.removeItem("cart");
     nav("/");
     toast.success("Logout Successfully");
     dispatch(logout())

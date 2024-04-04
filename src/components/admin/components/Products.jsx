@@ -36,14 +36,20 @@ function Products() {
   }
   function handleModel() {
     setIsModalOpen((prev) => !prev);
+    setTimeout(() => {
+      dispatch(fetchProductswithQuery(new URLSearchParams(filter)));
+    }, 1000);
   }
   function handleUpdateModel() {
     setUpdateModel((prev) => !prev);
+    setTimeout(() => {
+      dispatch(fetchProductswithQuery(new URLSearchParams(filter)));
+    }, 1000);
   }
   useEffect(() => {
     dispatch(fetchProductswithQuery(new URLSearchParams(filter)));
-  }, [filter]);
-  console.log(products, isLoading);
+  }, [filter, dispatch]);
+
   const totalProducts = products?.totalProducts;
 
   return (
@@ -153,26 +159,6 @@ function Products() {
               )}
             </div>
           )}
-          {/* <div className=" w-full mx-auto flex justify-center items-center mb-5">
-            <input
-              type="number"
-              placeholder={filter.resultsPerPage}
-              value={filter.resultsPerPage}
-              onChange={(e) =>
-                setFilter({ ...filter, resultsPerPage: e.target.value })
-              }
-              className="w-[5%] py-2 rounded-md shadow-xl mx-1"
-            />
-
-            <button
-              onClick={() =>
-                dispatch(fetchProductswithQuery(new URLSearchParams(filter)))
-              }
-              className={`bg-blue-500 text-white px-4 py-2 rounded `}
-            >
-              Set
-            </button>
-          </div> */}
         </div>
       )}
     </>

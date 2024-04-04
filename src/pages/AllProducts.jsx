@@ -12,7 +12,6 @@ import { MdNotificationsActive } from "react-icons/md";
 function AllProducts() {
   let { searchval } = useParams();
   let { filters, setFilters } = useContext(DarkModeContext);
-  let [filterlen, setfilterlen] = useState(0);
   // const [filters, setFilters] = useState({
   //   name: searchval || "",
   //   desc: "",
@@ -201,6 +200,7 @@ function AllProducts() {
               {/* Add more rating options as needed */}
             </div>
           </div>
+
           {/* Apply filters button */}
           <button
             onClick={handleApplyFilters}
@@ -233,7 +233,7 @@ function AllProducts() {
         {!isLoading && !isError && products?.products?.length > 0 && (
           <main className="w-full text-center mx-auto container  p-4">
             {/* Display products here */}
-            <div className="text-md md:text-xl border border-gray-500 my-4 md:mx-28 px-3 font-normal mb-2">
+            <div className="text-md md:text-xl border border-gray-500 my-4 md:mx-28 px-3 font-normal mb-2 flex justify-between">
               <p className="text-left">
                 Showing {startIndex} - {endIndex} of {t} results
                 {filters.name ? (
@@ -250,6 +250,31 @@ function AllProducts() {
                   )
                 )}
               </p>
+              <div className="flex border">
+                <p>Sort by:</p>
+                <select
+                  name="price"
+                  value={filters.price}
+                  onChange={handleFilterChange}
+                  className="text-gray-800 border-2 border-black outline-blue-400 cursor-pointer  p-0.5 rounded-md bg-slate-200 "
+                >
+                  <option className="rounded-md" value="">
+                    Default
+                  </option>
+                  <option className="rounded-md" value="asc">
+                    Low to High
+                  </option>
+                  <option className="rounded-md" value="desc">
+                    High to Low
+                  </option>
+                  <option className="rounded-md" value="latest">
+                    Latest
+                  </option>
+                  <option className="rounded-md" value="recom">
+                    Recommended
+                  </option>
+                </select>
+              </div>
             </div>
 
             {/* Example: map through products and display them */}

@@ -12,15 +12,15 @@ function Product({ product }) {
   const options = {
     edit: false,
     size: window.innerWidth < 600 ? 14 : 18,
-    value: ratings || 0, // Use actual rating from product data
-    activeColor: "gold",
+    value: ratings , // Use actual rating from product data
+    activeColor: "salmon",
     isHalf: true,
   };
 
   return (
     <Link
       to={`/product/${_id}`}
-      className="group relative bg-sky-100  rounded-lg shadow-xl shadow-slate-300 border border-slate-400 overflow-hidden transform hover:scale-105 transition duration-300 h-[250px] md:h-[384px] ease-in-out flex flex-col justify-between max-w-[230px]   md:min-w-[300px]  p-4 pb-0"
+      className="group relative bg-sky-100  rounded-lg shadow-xl shadow-slate-300 border border-slate-400 overflow-hidden transform hover:scale-105 transition duration-300 h-[250px] md:h-[384px] ease-in-out flex flex-col justify-between max-w-[230px]   md:min-w-[300px]  p-4 pb-0 w-full md:w-1/3 px-2  hover:shadow-lg-hover"
     >
       {/* Product image */}
       <div className="group-hover:opacity-75 overflow-hidden md:h-[70%]">
@@ -49,7 +49,12 @@ function Product({ product }) {
           {name.length >= 25 ? `${name.slice(0, 25)}..` : name}
         </p>
         <div className="flex justify-between items-center">
-          <p className="md:text-lg  font-semibold text-blue-700">₹{price}</p>
+          <div className="flex items-center">
+            <p className="md:text-lg  font-semibold text-blue-700">₹{price}</p>
+            <p className="text-xs line-through text-slate-600 ml-2">
+              ₹{(product?.price * 1.25).toFixed(2)}
+            </p>
+          </div>
           {/* Add to Cart button (uncomment and customize) */}
           <Button
             classes={

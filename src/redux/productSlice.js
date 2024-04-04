@@ -15,7 +15,7 @@ export const fetchProducts = createAsyncThunk(
 );
 export const fetchProductswithQuery = createAsyncThunk('products/query', async (query, thunkAPI) => {
   try {
-    console.log(query)
+   
     const response = await axios.get(`/product/all?${query}`)
     return response.data
   } catch (error) {

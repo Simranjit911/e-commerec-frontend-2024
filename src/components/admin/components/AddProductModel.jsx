@@ -56,7 +56,7 @@ function AddProductModel({ fn }) {
       isRecom: false,
       imageUrl: "", // New state for storing image URL
       file: null, // New state for storing uploaded file
-    });
+    });  
   }
 
   return (
