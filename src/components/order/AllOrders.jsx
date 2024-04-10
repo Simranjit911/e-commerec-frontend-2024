@@ -84,7 +84,7 @@ const AllOrders = () => {
   }, [dispatch]);
   const { myOrders } = useSelector((state) => state.order);
   let { order, isLoading, isError } = myOrders;
-  console.log(order, isLoading, isError);
+ 
   // Fetching user orders on component mount
 
   if (isLoading) {

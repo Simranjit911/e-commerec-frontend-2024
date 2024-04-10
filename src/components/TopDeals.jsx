@@ -60,15 +60,15 @@ function TopDeals() {
   ];
 
   return (
-    <div className="text-black py-8 my-5">
-      <p className="py-2 md:ml-28 font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-sky-600">
+    <div className="text-black py-8 px-4 -mb-10 md:mb-0 md:my-5">
+      <p className="py-2  font-semibold text-xl  md:text-3xl text-left  underline text-decoration-sky-500 text-blue-600">
         Top Deals on
       </p>
       <Marquee
-        className="py-2"
+        className="py-2 "
         pauseOnClick={true}
         pauseOnHover={true}
-        speed={200}
+        speed={180}
       >
         {products?.map((product, index) => (
           <Card key={index} product={product} />

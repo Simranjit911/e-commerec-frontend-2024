@@ -53,7 +53,7 @@ function AllProducts() {
 
   const totalPages = Math.ceil(d / filters.resultsPerPage);
 
-  console.log(totalPages);
+
   const startIndex = (filters.page - 1) * filters.resultsPerPage + 1;
   // let endIndex = filters.page * filters.resultsPerPage;
   // let startIndex = endIndex - filters.resultsPerPage;
@@ -67,7 +67,7 @@ function AllProducts() {
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
-  console.log(d);
+
   // Function to apply filters
   const handleApplyFilters = () => {
     dispatch(fetchProductswithQuery(queryParams));

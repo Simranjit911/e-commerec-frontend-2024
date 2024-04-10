@@ -18,33 +18,33 @@ function Home() {
   const { products, isLoading, isError, singleProduct } = useSelector(
     (state) => state.products
   );
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getLoggedUserOrder());
-
-  },[])
+  }, []);
   let { user, isAuthenticated } = useSelector((state) => state.user);
   let nav = useNavigate();
   return (
-    <div className="w-full  h-full text-white ">
+    <div className="w-full  h-full text-white">
       <ImageSlider />
+      <div className=" max-w-[1220px] mx-auto">
       <Services />
       <TopDeals />
-  
-      <LatestProducts />
-      <div className="mx auto flex justify-center items-center my-8">
-        <Button
-          text={"Explore More Products"}
-          fn={() => nav("/allproducts")}
-          classes={"mx auto flex justify-center items-center"}
-        />
-      </div>
-      <RecommendedProd />
-      <div className="mx auto flex justify-center items-center my-8">
-        <Button
-          text={"Explore More Products"}
-          fn={() => nav("/allproducts")}
-          classes={"mx auto flex justify-center items-center"}
-        />
+        <LatestProducts />
+        <div className="mx auto flex md:hidden justify-center items-center my-8">
+          <Button
+            text={"Explore More Products"}
+            fn={() => nav("/allproducts")}
+            classes={"mx auto flex justify-center items-center"}
+          />
+        </div>
+        <RecommendedProd />
+        <div className="mx auto flex md:hidden justify-center items-center my-8">
+          <Button
+            text={"Explore More Products"}
+            fn={() => nav("/allproducts")}
+            classes={"mx auto flex justify-center items-center"}
+          />
+        </div>
       </div>
     </div>
   );

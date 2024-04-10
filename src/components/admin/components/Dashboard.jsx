@@ -17,7 +17,7 @@ function Dashboard() {
   let [orderStatus, setOrderStatus] = useState([]);
 
   useEffect(() => {
-console.log("call")
+
     dispatch(fetchAllUsers());
     dispatch(getAllOrders());
     dispatch(fetchProducts());

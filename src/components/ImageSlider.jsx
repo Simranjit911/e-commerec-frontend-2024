@@ -12,21 +12,22 @@ const ImageSlider = () => {
   const settings = {
     dots: true,
     infinite: true,
+    
     speed: 900,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 1600,
   };
   let nav = useNavigate();
 
   return (
     <Slider {...settings}>
-      <div className="relative bg-opacity-25 max-h-[500px] md:max-h-[500px] bg-black">
+      <div className="relative  max-h-[500px]  md:max-h-[550px] bg-opacity-50 bg-black">
         <img
           src={img1}
           alt=""
-          className="md:max-h-[500px]  max-h-[500px] w-full object-cover"
+          className="max-h-[500px] md:max-h-[550px] w-full object-cover"
         />
         <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center text-white">
           <div className="text-center">
@@ -48,11 +49,11 @@ const ImageSlider = () => {
         </div>
       </div>
       {/* div 2 */}
-      <div className="relative  max-h-[480px]  md:max-h-[500px] bg-opacity-50 bg-black">
+      <div className="relative  max-h-[500px]  md:max-h-[550px] bg-opacity-50 bg-black">
         <img
           src={img2}
           alt=""
-          className=" max-h-[480px] md:max-h-[500px] w-full object-cover"
+          className=" max-h-[500px] md:max-h-[550px] w-full object-cover"
         />
         <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center text-white">
           <div className="text-center">
@@ -74,11 +75,11 @@ const ImageSlider = () => {
         </div>
       </div>
       {/* div 3 */}
-      <div className="relative md:max-h-[500px]">
+      <div className="relative  max-h-[500px]  md:max-h-[550px] bg-opacity-50 bg-black">
         <img
           src={img3}
           alt=""
-          className="md:md:md:max-h-[500px] w-full object-cover"
+          className="max-h-[500px] md:max-h-[550px] w-full object-cover"
         />
         <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center text-white">
           <div className="text-center">
