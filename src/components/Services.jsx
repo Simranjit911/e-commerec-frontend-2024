@@ -30,17 +30,17 @@ function Services() {
   ];
 
   return (
-    <div className=" mt-7 services-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 p-4 rounded-md shadow-md bg-sky-200">
+    <div className=" mt-7  grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 p-4 rounded-md shadow-md text-center bg-sky-100">
       {servicesData?.map((service, index) => (
         <div
           key={index}
-          className="service-card flex flex-col items-center justify-center p-3 hover:scale-105 duration-150 rounded-md hover:bg-sky-300 cursor-pointer border border-sky-400"
+          className="service-card flex flex-col items-center justify-center p-1 md:p-3 hover:scale-105 duration-150 rounded-md hover:bg-sky-300 cursor-pointer border border-sky-400"
         >
           {service.logo}
-          <h3 className="text-xl font-semibold text-gray-800 mt-2">
+          <h3 className="md:text-xl text-md md:font-semibold text-gray-800 mt-2">
             {service.heading}
           </h3>
-          <p className="text-gray-600 text-sm mt-1">{service.text}</p>
+          <p className="text-gray-600 text-xs md:text-sm md:mt-0.5">{service.text}</p>
         </div>
       ))}
     </div>

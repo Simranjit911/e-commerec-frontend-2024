@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers } from "../../../redux/adminSlice";
 import User from "./User";
-import { fetchProductswithQuery } from "../../../redux/productSlice";
+import { fetchProducts, fetchProductswithQuery } from "../../../redux/productSlice";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { getAllOrders } from "../../../redux/orderSlice";
 import Loader from "../../Loader";
@@ -17,12 +17,13 @@ function Dashboard() {
   let [orderStatus, setOrderStatus] = useState([]);
 
   useEffect(() => {
+console.log("call")
     dispatch(fetchAllUsers());
     dispatch(getAllOrders());
-    dispatch(fetchProductswithQuery());
+    dispatch(fetchProducts());
   }, [dispatch]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setInStockCount(products?.totalProducts - products?.outOfStockCount);
     setOutOfStockCount(products?.outOfStockCount);
     setOrderStatus(allOrders?.order?.orderStatusCounts);

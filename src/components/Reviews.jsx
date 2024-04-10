@@ -36,7 +36,7 @@ function Reviews({ pId, productRating }) {
     } else {
       let { order: orders } = order;
       let orderedProd = orders?.map((i) => i.orderedItems);
-      orderedProd = orderedProd.flat(3);
+      orderedProd = orderedProd?.flat(3);
 
       let findOrder=false;
    

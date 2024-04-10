@@ -31,19 +31,32 @@ function AllProducts() {
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
+    if (name == "price" || name == "name" || name == "category") {
+      setFilters((prevFilters) => ({ ...prevFilters, [name]: value, page: 1 }));
+    }
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
   };
   const queryParams = new URLSearchParams(filters).toString();
-  let t =
-    filters.category != "" ||
-    filters.price != "" ||
-    filters.rating != "" ||
-    filters.name != ""
-      ? products?.products?.length
-      : products?.totalProducts;
-  const totalPages = Math.ceil(t / filters.resultsPerPage);
+  let t;
+  if (filters.category !== "" || filters.rating != "" || filters.name != "") {
+    t = products?.products?.length;
+  } else {
+    t = products?.totalProducts;
+  }
 
+  let d;
+  if (products?.products?.length <= 8) {
+    d = t;
+  } else {
+    d = products?.totalProducts;
+  }
+
+  const totalPages = Math.ceil(d / filters.resultsPerPage);
+
+  console.log(totalPages);
   const startIndex = (filters.page - 1) * filters.resultsPerPage + 1;
+  // let endIndex = filters.page * filters.resultsPerPage;
+  // let startIndex = endIndex - filters.resultsPerPage;
   const endIndex = Math.min(filters.page * filters.resultsPerPage, t);
   const handlePageChange = (pageNumber) => {
     setFilters((prevFilters) => ({ ...prevFilters, page: pageNumber }));
@@ -54,7 +67,7 @@ function AllProducts() {
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
-
+  console.log(d);
   // Function to apply filters
   const handleApplyFilters = () => {
     dispatch(fetchProductswithQuery(queryParams));
@@ -211,29 +224,77 @@ function AllProducts() {
             Apply Filters
           </button>
         </aside>
-
-        {/* Main */}
+        {/* loader */}
         {isLoading && (
           <div className="my-6 mx-auto">
             <Loader span={"Loading "} />
           </div>
         )}
+        {/* error */}
         {!isLoading && isError && (
           <div className="w-[85%] text-center mx-auto p-4">
             <h2 className="text-xl font-semibold mb-2">Error</h2>
             <p>Error while fetching data</p>
           </div>
         )}
+        {/* Sorting filters */}
         {!isLoading && !isError && products?.products?.length < 1 && (
           <div className="w-[85%] text-center mx-auto p-4">
+            <div className="text-sm md:text-xl border border-gray-500 my-2 md:mx-28 px-3 font-normal mb-2 flex justify-between">
+              <p className="text-left">
+                Showing {startIndex + 1} - {products?.products?.length} of{" "}
+                {products?.totalProducts} results 
+                {filters.name ? (
+                  <span className="text-blue-600">
+                    {" "}
+                    for "{filters.name.toLowerCase()}"
+                  </span>
+                ) : (
+                  filters.category && (
+                    <span className="text-blue-600">
+                      {" "}
+                      for "{filters.category.toLowerCase()}"
+                    </span>
+                  )
+                )}
+               
+              </p>
+              <div className="flex border mx-1 relative">
+          
+                <p>Sort by:</p>
+                <select
+                  name="price"
+                  value={filters.price}
+                  onChange={handleFilterChange}
+                  className="text-gray-800 border-2 border-black outline-blue-400 cursor-pointer  p-0.5 rounded-md bg-slate-200 "
+                >
+                  <option className="rounded-md" value="">
+                    Default
+                  </option>
+                  <option className="rounded-md" value="asc">
+                    Low to High
+                  </option>
+                  <option className="rounded-md" value="desc">
+                    High to Low
+                  </option>
+                  <option className="rounded-md" value="latest">
+                    Latest 
+                  </option>
+                  <option className="rounded-md" value="recom">
+                    Recommended
+                  </option>
+                </select>
+              </div>
+            </div>
             <h2 className="text-xl font-semibold mb-2">No Products Found</h2>
             <p>No products matching the specified filters.</p>
           </div>
         )}
+        {/* products */}
         {!isLoading && !isError && products?.products?.length > 0 && (
           <main className="w-full text-center mx-auto container  p-4">
             {/* Display products here */}
-            <div className="text-md md:text-xl border border-gray-500 my-4 md:mx-28 px-3 font-normal mb-2 flex justify-between">
+            <div className="text-sm md:text-xl border border-gray-500 my-2 md:mx-28 px-3 font-normal mb-2 flex justify-between">
               <p className="text-left">
                 Showing {startIndex} - {endIndex} of {t} results
                 {filters.name ? (
@@ -250,7 +311,7 @@ function AllProducts() {
                   )
                 )}
               </p>
-              <div className="flex border">
+              <div className="flex border mx-1">
                 <p>Sort by:</p>
                 <select
                   name="price"

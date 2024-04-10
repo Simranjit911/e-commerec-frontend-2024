@@ -121,47 +121,50 @@ const orderSlice = createSlice({
         builder
             .addCase(getLoggedUserOrder.pending, (state) => {
                 state.myOrders.isLoading = true
-                state.myOrders.isError = true
+                state.myOrders.isError = false
 
+            }).addCase(getLoggedUserOrder.fulfilled, (state, action) => {
+                state.myOrders.order = action.payload
+                state.myOrders.isLoading = false
+                state.myOrders.isError = false
             })
             .addCase(getLoggedUserOrder.rejected, (state, action) => {
                 state.myOrders.isLoading = false
                 state.myOrders.isError = true
 
             })
-            .addCase(getLoggedUserOrder.fulfilled, (state, action) => {
-                state.myOrders.order = action.payload
-                state.myOrders.isLoading = false
-                state.myOrders.isError = false
-            })
+            
             // single order
             .addCase(getSingleOrder.pending, (state) => {
                 state.singleOrder.isLoading = true
-            })
-            .addCase(getSingleOrder.rejected, (state, action) => {
-                state.singleOrder.isLoading = false
-                state.singleOrder.isError = true
+                state.singleOrder.isError = false
 
-            })
-            .addCase(getSingleOrder.fulfilled, (state, action) => {
+            }).addCase(getSingleOrder.fulfilled, (state, action) => {
                 state.singleOrder.order = action.payload
                 state.singleOrder.isLoading = false
                 state.singleOrder.isError = false
-            })
+            }).addCase(getSingleOrder.rejected, (state, action) => {
+                state.singleOrder.isLoading = false
+                state.singleOrder.isError = true
+
+            })            
+            
             // all orders
             .addCase(getAllOrders.pending, (state) => {
                 state.allOrders.isLoading = true
+                state.allOrders.isError = false
+
+            }).addCase(getAllOrders.fulfilled, (state, action) => {
+                state.allOrders.order = action.payload
+                state.allOrders.isLoading = false
+                state.allOrders.isError = false
             })
             .addCase(getAllOrders.rejected, (state, action) => {
                 state.allOrders.isLoading = false
                 state.allOrders.isError = true
 
             })
-            .addCase(getAllOrders.fulfilled, (state, action) => {
-                state.allOrders.order = action.payload
-                state.allOrders.isLoading = false
-                state.allOrders.isError = false
-            })
+            
     })
 });
 

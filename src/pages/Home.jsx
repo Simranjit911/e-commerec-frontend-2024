@@ -11,19 +11,33 @@ import { loadCartFromLocalStorage } from "../redux/cartSlice";
 // import { getCartData } from "../redux/cartSlice";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
+import { getLoggedUserOrder } from "../redux/orderSlice";
+import AllProducts from "./AllProducts";
 function Home() {
   const dispatch = useDispatch();
   const { products, isLoading, isError, singleProduct } = useSelector(
     (state) => state.products
   );
+  useEffect(()=>{
+    dispatch(getLoggedUserOrder());
+
+  },[])
   let { user, isAuthenticated } = useSelector((state) => state.user);
   let nav = useNavigate();
   return (
-    <div className="w-full h-full text-white ">
+    <div className="w-full  h-full text-white ">
       <ImageSlider />
       <Services />
       <TopDeals />
+  
       <LatestProducts />
+      <div className="mx auto flex justify-center items-center my-8">
+        <Button
+          text={"Explore More Products"}
+          fn={() => nav("/allproducts")}
+          classes={"mx auto flex justify-center items-center"}
+        />
+      </div>
       <RecommendedProd />
       <div className="mx auto flex justify-center items-center my-8">
         <Button

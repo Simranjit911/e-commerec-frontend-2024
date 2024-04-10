@@ -90,6 +90,8 @@ const userSlice = createSlice({
         logout: (state, action) => {
             localStorage.removeItem("token")
             localStorage.removeItem("user")
+            localStorage.removeItem("cart")
+            window.location.reload()
             state.token = null
             state.isAuthenticated = false
         }
@@ -99,7 +101,7 @@ const userSlice = createSlice({
             // register
             .addCase(registerUser.pending, (state) => {
                 state.isLoading = true;
-                state.isLoading && toast.loading("Registering...")
+                state.isLoading && toast.loading("Registering...",{duration:2000})
             })
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.isLoading = false;

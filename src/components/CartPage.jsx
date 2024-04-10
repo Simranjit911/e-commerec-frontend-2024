@@ -42,7 +42,7 @@ function CartPage() {
           </Link>
         </div>
       ) : (
-        <div className="md:px-[15%] min-h-">
+        <div className="md:px-[15%] min-h-[500px]">
           <h2 className="container text-xl font-semibold mb-4">
             Your Shopping Cart
           </h2>
@@ -54,7 +54,7 @@ function CartPage() {
                   <th className="px-4 py-2 text-sm md:text-md text-left">
                     Product Name
                   </th>
-                  <th className="px-4 py-2 text-center">Price</th>
+                  <th className="px-4 w-full py-2 text-center">Price</th>
                   <th className="px-4 py-2 text-center">Qty</th>
                   <th className="px-4 py-2 text-center">Total Price</th>
                 </tr>
@@ -70,7 +70,7 @@ function CartPage() {
                         <CiCircleRemove />
                       </button>
                     </td>
-                    <td className="px-4 py-2 flex items-center">
+                    <td className="px-4 py-2 flex min-w-48 items-center">
                       <img
                         src={item.images.length > 0 ? item.images[0].url : ""}
                         alt={item.name}

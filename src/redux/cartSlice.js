@@ -11,7 +11,7 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action) => {
-                    const { _id: id, name } = action.payload;
+            const { _id: id, name } = action.payload;
             const existingProduct = state.cart.find(item => item._id === id);
 
             if (action.payload?.stock < 1) {
@@ -21,8 +21,12 @@ const cartSlice = createSlice({
                 if (existingProduct.qty >= existingProduct.stock) {
                     toast.error("Products is out of stock now")
                 } else {
-                    existingProduct.qty++;
-                    toast.success(`${name} added to cart!`);
+                    if (existingProduct.qty >= 5) {
+                        toast.error("You can buy only 5 at a single time")
+                    } else {
+                        existingProduct.qty++;
+                        toast.success(`${name} added to cart!`);
+                    }
 
                 }
             } else {
@@ -32,7 +36,7 @@ const cartSlice = createSlice({
             saveCartToLocalStorage(state.cart);
         },
         loadCart: (state, action) => {
-       
+
             state.cart = action.payload;
         },
         deleteFromCart: (state, action) => {
@@ -50,8 +54,13 @@ const cartSlice = createSlice({
                 if (existingProduct.qty >= existingProduct.stock) {
                     toast.error("Products is out of stock now")
                 } else {
-                    existingProduct.qty++;
-                    toast.success(`Again ${existingProduct.name} added to cart!`);
+                    if (existingProduct.qty >= 5) {
+                        toast.error("You can buy only 5 products at single time")
+                    } else {
+
+                        existingProduct.qty++;
+                        toast.success(`Again ${existingProduct.name} added to cart!`);
+                    }
                 }
             } else {
                 state.cart.push({ ...action.payload, qty: 1 });

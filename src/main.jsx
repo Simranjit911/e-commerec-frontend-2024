@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <DarkModeProvider>
         <App />
-        <Toaster toastOptions={{ duration: 2000 }} />
+        <Toaster toastOptions={{ duration: 1000 }} />
       </DarkModeProvider>
     </BrowserRouter>
   </Provider>

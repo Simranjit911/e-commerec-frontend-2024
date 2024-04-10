@@ -41,6 +41,10 @@ function Navbar() {
       to: "/allproducts",
       text: "Shop",
     },
+    {
+      to: "/allproducts",
+      text: "Categories",
+    },
     ...(user?.role === "admin"
       ? [
           {
@@ -53,7 +57,7 @@ function Navbar() {
 
   return (
     <nav className="bg-blue-500 text-white px-2 py-3  text-xl items-center dark:bg-slate-950 shadow-2xl transition-all duration-500 ease-out">
-      <div className="flex md:justify-evenly justify-around items-center">
+      <div className="flex md:justify-evenly justify-between items-center">
         <Link to={"/"}>
           <Logo classes="md:text-lg text-md  font-normal" />
         </Link>
@@ -70,10 +74,10 @@ function Navbar() {
         </div>
         {/* mobile navigation */}
         {isOpen && (
-          <div className="md:hidden flex absolute flex-col top-10 bg-blue-500 w-full py-4 text-left z-50 shadow-xl transition-all duration-500 ease-out">
+          <div className="md:hidden flex left-0 absolute flex-col top-10 bg-blue-500 w-full py-4 text-left z-50 shadow-xl transition-all duration-500 ease-out">
             {links.map((ele, i) => (
               <Link
-                className="mx-2 text-left ml-[10%] text-md"
+                className="mx-2 text-left ml-[5%] text-md"
                 key={i}
                 to={ele.to}
               >

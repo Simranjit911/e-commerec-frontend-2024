@@ -79,13 +79,14 @@ const OrderDetails = ({ order }) => {
 const AllOrders = () => {
   // Redux hooks for dispatch and selector
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getLoggedUserOrder());
+  }, [dispatch]);
   const { myOrders } = useSelector((state) => state.order);
   let { order, isLoading, isError } = myOrders;
   console.log(order, isLoading, isError);
   // Fetching user orders on component mount
-  useEffect(() => {
-    dispatch(getLoggedUserOrder());
-  }, [dispatch]);
+
   if (isLoading) {
     return (
       <div className="w-full h-full min-h-64">
@@ -95,15 +96,14 @@ const AllOrders = () => {
   }
 
   // Handling error state
-  if (isError) {
-    return <div>Error occurred while fetching orders.</div>;
+  if (!isLoading && isError) {
+    return <div className="text-center min-h-36 mt-16">Error occurred while fetching orders.Please <Link to={"/logout"} className="text-blue-600 underline mx-1">Logout</Link> and Login again!</div>;
   }
 
   return (
     <div className="w-full max-w-screen-lg min-h-[500px]  mx-auto py-8 px-4">
-      {/* Title */}
       <h1 className="text-3xl font-bold mb-6 text-center">My Orders</h1>
-      {/* Mapping over user orders and rendering OrderDetails component */}
+
       {myOrders?.order?.order?.length > 0 ? (
         myOrders?.order?.order?.map((order) => (
           <OrderDetails key={order._id} order={order} />

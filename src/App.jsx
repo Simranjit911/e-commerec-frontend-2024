@@ -18,6 +18,7 @@ import CartPage from "./components/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderDetails from "./components/order/OrderDetails";
 import NotFound from "./pages/NotFound";
+import Logout from "./components/profile/Logout";
 
 export default function App() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
 
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           {/* <Route path="/cancel" element={<CancelPage />} /> */}
           <Route path="/order-details/:id" element={<OrderDetails />} />
