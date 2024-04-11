@@ -39,12 +39,12 @@ function Navbar() {
     },
     {
       to: "/allproducts",
-      text: "Shop",
+      text: "Products",
     },
-    {
-      to: "/allproducts",
-      text: "Categories",
-    },
+    // {
+    //   to: "/allproducts",
+    //   text: "Categories",
+    // },
     ...(user?.role === "admin"
       ? [
           {
@@ -56,15 +56,15 @@ function Navbar() {
   ];
 
   return (
-    <nav className="bg-blue-500 text-white px-2 py-3  text-xl items-center dark:bg-slate-950 shadow-2xl transition-all duration-500 ease-out">
+    <nav id="nav" className="bg-blue-500 text-white px-2 py-3  text-xl items-center dark:bg-slate-950 shadow-2xl transition-all duration-500 ease-out">
       <div className="flex md:justify-evenly justify-between items-center">
         <Link to={"/"}>
           <Logo classes="md:text-lg text-md  font-normal" />
         </Link>
-        <div className="hidden md:flex">
+        <div className="hidden md:flex gap-4">
           {links.map((ele, i) => (
             <Link
-              className="mx-2 text-md hover:scale-105 duration-100"
+              className="mx-2 text-md hover:scale-105 duration-100 hover:underline"
               key={i}
               to={ele.to}
             >

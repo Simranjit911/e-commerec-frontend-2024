@@ -41,7 +41,7 @@ function LatestProducts() {
     <div>
       <div className="text-black text-center bg-gray-200 my-3 py-4 px-4 md:px-0 ">
         <div className="flex justify-between md:px-8 items-center ">
-          <p className="py-2  font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-blue-600">
+          <p className="py-2 underline font-semibold text-xl  md:text-3xl md:text-left text-center  text-decoration-sky-500 text-slate-600">
             Latest Products
           </p>
           <div className="mx auto md:flex justify-center items-center hidden">

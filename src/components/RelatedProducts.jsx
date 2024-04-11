@@ -35,8 +35,8 @@ function RelatedProducts({ category, id }) {
         </div>
       )}
       {!isLoading && !isError && products?.products?.length > 1 && (
-        <div className="max-w-[1320px] mx-auto">
-          <p className="  mt-6 md:ml-32 font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-blue-600">
+        <div className="max-w-[1220px] mx-auto py-2">
+          <p className="  mt-6 md:ml-28 font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-blue-600">
             Related Products
           </p>
           <div className="flex px-0 gap-3 py-4 flex-wrap justify-around  md:overflow-x-auto  ">

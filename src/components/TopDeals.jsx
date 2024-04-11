@@ -6,7 +6,7 @@ function TopDeals() {
   const products = [
     {
       _id: "1",
-      name: "Laptops",
+      name: "Laptop",
       images: [
         { url: "https://m.media-amazon.com/images/I/71JwQSPtkRL._SY450_.jpg" },
       ],
@@ -15,7 +15,7 @@ function TopDeals() {
     },
     {
       _id: "2",
-      name: "Mobiles",
+      name: "Mobile",
       images: [
         {
           url: "https://m.media-amazon.com/images/I/31p5cVyRLmL._SY445_SX342_QL70_FMwebp_.jpg",
@@ -37,10 +37,10 @@ function TopDeals() {
     },
     {
       _id: "3",
-      name: "HeadPhones",
+      name: "Headphone",
       images: [
         {
-          url: "https://m.media-amazon.com/images/I/31rqjDOoKRL._SX300_SY300_QL70_FMwebp_.jpg",
+          url: "https://m.media-amazon.com/images/I/61zWFqX+krL._SL1500_.jpg",
         },
       ],
       category: "headphone",
@@ -48,21 +48,32 @@ function TopDeals() {
     },
     {
       _id: "4",
-      name: "Earbuds",
+      name: "Earbud",
       images: [
         {
-          url: "https://m.media-amazon.com/images/I/31JICL9In-L._SX300_SY300_QL70_FMwebp_.jpg",
+          url: "https://m.media-amazon.com/images/I/61bodEi+1JL._SL1500_.jpg",
         },
       ],
       category: "earbuds",
       price: 6000,
     },
+    {
+      _id: "5",
+      name: "Smartwatch",
+      images: [
+        {
+          url: "https://m.media-amazon.com/images/I/51u3-CrLPIL._SL1000_.jpg",
+        },
+      ],
+      category: "smartwatch",
+      price: 6000,
+    },
   ];
 
   return (
-    <div className="text-black py-8 px-4 -mb-10 md:mb-0 md:my-5">
-      <p className="py-2  font-semibold text-xl  md:text-3xl text-left  underline text-decoration-sky-500 text-blue-600">
-        Top Deals on
+    <div className="text-black py-8 px-4 -mb-10 md:mb-0 md:my-5 bg-gray-300 rounded-md">
+      <p className="  font-semibold text-xl  md:text-3xl text-left underline  text-decoration-sky-500 text-slate-600 ">
+        Categories
       </p>
       <Marquee
         className="py-2 "

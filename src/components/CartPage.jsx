@@ -54,7 +54,7 @@ function CartPage() {
                   <th className="px-4 py-2 text-sm md:text-md text-left">
                     Product Name
                   </th>
-                  <th className="px-4 w-full py-2 text-center">Price</th>
+                  <th className="px-4  py-2 text-center">Price</th>
                   <th className="px-4 py-2 text-center">Qty</th>
                   <th className="px-4 py-2 text-center">Total Price</th>
                 </tr>

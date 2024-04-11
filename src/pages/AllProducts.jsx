@@ -88,9 +88,9 @@ function AllProducts() {
       <div className="flex min-h-[600px] ">
         {/* Filters */}
         <aside
-          className={` absolute left-0 min-h-screen
-           transition-all duration-500 ease-in-out z-10 
-          h-[100%]  bg-slate-200 shadow-2xl
+          className={` absolute  left-0 h-screen
+           transition-all duration-200 ease-in-out z-10 
+            bg-slate-200 shadow-2xl
           ${!isOpen ? "w-[220px]" : "w-0 "}
         `}
         >
@@ -259,14 +259,14 @@ function AllProducts() {
                 )}
                
               </p>
-              <div className="flex border mx-1 relative">
+              <div className="flex border mx-1 ">
           
                 <p>Sort by:</p>
                 <select
                   name="price"
                   value={filters.price}
                   onChange={handleFilterChange}
-                  className="text-gray-800 border-2 border-black outline-blue-400 cursor-pointer  p-0.5 rounded-md bg-slate-200 "
+                  className="text-gray-800 border-2 border-black outline-blue-400 cursor-pointer  md:p-0.5 rounded-md bg-slate-200 "
                 >
                   <option className="rounded-md" value="">
                     Default
@@ -339,7 +339,7 @@ function AllProducts() {
             </div>
 
             {/* Example: map through products and display them */}
-            <div className="flex flex-wrap gap-2 py-4 min-h-[500px] md:gap-6 justify-center items-center">
+            <div className="grid xs:grid-cols-1 grid-cols-2  justify-center items-center col-auto px-auto   gap-5 md:flex md:flex-wrap md:gap-5 md:my-5 md:items-center md:justify-between max-w-[1200px] mx-auto">
               {products?.products?.map((p, i) => (
                 <Product product={p} key={i} />
               ))}

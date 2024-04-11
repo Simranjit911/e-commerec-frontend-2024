@@ -37,7 +37,7 @@ function Services() {
           className="service-card flex flex-col items-center justify-center p-1 md:p-3 hover:scale-105 duration-150 rounded-md hover:bg-blue-300 cursor-pointer border border-blue-500"
         >
           {service.logo}
-          <h3 className="md:text-xl text-md md:font-semibold text-gray-800 mt-2">
+          <h3 className="md:text-md text-sm md:font-semibold text-gray-800 mt-2">
             {service.heading}
           </h3>
           <p className="text-gray-600 text-xs md:text-sm md:mt-0.5">{service.text}</p>

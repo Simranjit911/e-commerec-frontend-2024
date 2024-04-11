@@ -25,8 +25,8 @@ function Home() {
   let nav = useNavigate();
   return (
     <div className="w-full  h-full text-white">
-      <ImageSlider />
       <div className=" max-w-[1220px] mx-auto">
+      <ImageSlider />
       <Services />
       <TopDeals />
         <LatestProducts />

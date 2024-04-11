@@ -41,8 +41,8 @@ function RecommendedProd() {
       <div className="text-black text-center  my-1 py-2 px-2 md:px-0">
         
       <div className="flex justify-between md:px-8 items-center">
-          <p className="py-2  font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-blue-600">
-            Recommended Products
+          <p className="py-2  font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-gray-600">
+            New Arrivals
           </p>
           <div className="mx auto md:flex justify-center items-center hidden">
             <Button

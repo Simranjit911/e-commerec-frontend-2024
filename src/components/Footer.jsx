@@ -13,7 +13,7 @@ function Footer() {
   const { cart } = useSelector((state) => state.cart);
 
   return (
-    <footer className="bg-blue-600 sticky w-full bottom-0">
+    <footer className="bg-blue-600 sticky w-full bottom-0 text-white">
       {/* Top section */}
       <section className="flex flex-col md:flex-row justify-evenly items-center py-4 text-xl border-b-2 border-gray-400">
         <p className="mb-4 md:mb-0">

@@ -4,15 +4,15 @@ function Card({ product }) {
   const nav = useNavigate();
 
   return (
-    <div className="group cursor-pointer md:max-h-[300px] max-h-[200px] flex flex-col justify-center items-center mx-6 bg-blue-200 hover:bg-blue-400 rounded-md hover:scale-105 duration-300 md:p-3 p-2 shadow-xl md:my-8 hover:shadow-2xl pb-1 " onClick={() => nav("/allproducts")}>
-    <div className="w-[100%] md:h-[240px] h-[150px]">
+    <div className="group cursor-pointer md:max-h-[300px] max-h-[200px] flex flex-col justify-center items-center mx-2 bg-blue-300 hover:bg-blue-500 rounded-md hover:scale-105 duration-300 md:p-2 p-1  md:my-2 hover:shadow-xl pb-0 " onClick={() => nav("/allproducts")}>
+    <div className="w-[100%] md:h-[220px] h-[100px]">
       <img
         src={product.images[0].url}
         alt={product.name}
         className="object-cover w-full h-full rounded-md"
       />
     </div>
-    <div className="md:text-2xl text-xl text-black group-hover:text-gray-100">
+    <div className="md:text-lg text-sm   group-hover:text-gray-100">
       {product.name}
     </div>
   </div>

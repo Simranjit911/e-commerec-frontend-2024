@@ -9,7 +9,7 @@ import Button from "../components/Button";
 import Reviews from "../components/Reviews";
 import { addToCart } from "../redux/cartSlice";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { MdNavigateNext } from "react-icons/md";
+import { MdNavigateNext, MdReviews } from "react-icons/md";
 import RelatedProducts from "../components/RelatedProducts";
 
 function ProductDetails() {
@@ -120,13 +120,13 @@ function ProductDetails() {
             </div>
           </div>
           {/* Related Products */}
-          <div className="">
+          <div className="max-w-[1220px] mx-auto">
             <RelatedProducts category={product?.category} id={id} />
           </div>
           {/* Reviews */}
-          <div className="mx-auto my-8 px-8">
-            <p className="py-2 md:ml-28 font-semibold text-xl  md:text-3xl md:text-left text-center underline text-decoration-sky-500 text-sky-600">
-              Customer Reviews
+          <div className="mx-auto my-8 px-8 max-w-[1220px] ">
+            <p className="py-2 md:ml-24 font-semibold text-xl  md:text-3xl md:text-left text-center text-decoration-sky-500 text-blue-600 flex items-center underline gap-1">
+              Customer Reviews <MdReviews/>
             </p>
             <Reviews pId={id} productRating={product?.ratings} />
           </div>
